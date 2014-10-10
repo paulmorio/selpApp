@@ -1,0 +1,9 @@
+# Git will ignore the files placed here
+
+# Editor back-up files
+~*
+
+# TexMaker auxillary files
+*.aux
+*.log
+*.synctex.gz
