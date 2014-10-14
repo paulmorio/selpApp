@@ -13,21 +13,34 @@ Software Engineering Large Practical 14/15}
 \tableofcontents
 \newpage
 
+\section{Overview}
+\textbf{Real Fantasy Adventure} is a web application that takes a user's real world activities (exercising, working, studying) and changes his/her \textit{Avatar} inside a fantasy world within the web application. Users perform activities towards goals set in the form of \textit{Quests}, the user will achieve points by completing these quests and can compete against other users who use the web application facilitating competitive behaviour. The categories of activities the user may perform are various: academic, athletic/wellness and professional, therefore allowing users to log their achievements in various ways, and can be ranked individually in each available category as well as overall. 
 
-\section{Abstract}
-\textbf{Real Fantasy Adventure} is a web application that takes a user's real world activities (exercising, working, studying) and changes his/her \textit{Avatar} inside a fantasy world within the web application. Users perform activities towards goals set in the form of \textit{Quests}, the user will achieve points by completing these quests and can compete against other users who use the web application facilitating competitive behaviour. As mentioned above the categories of activities the user may perform are various: academic, athletic/wellness and professional, therefore allow user's to log their achievements in various ways, and can be ranked individually in each available category as well as overall. The web application will be created utilizing the \textit{Django Web Framework} for the back end handling of data and database management. Development will incremental fashion to build minimum viable product at each stage ready for release, several possible extensions to the base applications are explored in this document.
+The majority of the web application will be created with \textit{Python 2.7} utilizing the \textit{Django Web Framework 1.7} for the back end handling of data and database management. Development will incremental fashion to build minimum viable product at each stage ready for release, and several possible extensions to the base application are explored in this document.
 
 \section{Description of the Application}
 \subsection{Overview for Users: What it does}
-The web application can be thought of as a turn based game in that it allows a user to use 24 hours each day to log what they have
 
-\subsubsection{Use Case Scenario}
+The web application is a turn-based \textit{game} that allows the \textit{player} to log what he/she has done throughout the day to improve their in-game \textit{avatar}. Each turn is anologous to a day in real life; the player would log his activities and the in-game avatar would reflect this by mimicing the actions of the player in its fantasy world, hopefully improving the stats in relevant properties (this will be handled by luck). Activities the player performs in real life can be logged under 3 major categories: Academic, Athletic/Wellness, and Professional; this allows the player to log information beyond those typically seen in other real-life trackers that tend to focus on athletic deeds such as the \textit{FitBit App} or \textit{Zombies Run!} and allows setting of goals (called \textit{Quests} in the application) in these categories. 
+
+Logging of activities in the categories will be rudimentary and intuitive -- Studying for 3 hours would increase the stat of a subcategory under Academic, and helping out in a restaurant would boost a Professional stat -- rudimentary because the logging would be performed by trusting the player to be honest about the values they input in the name of roleplay\footnote{If time permits alternative methods will be explored, outlined in section 3}.
+
+While the exact mechanics behind the changing of the stats and the resulting aesthetic effects happening on the screen are unclear, once the player logs his/her actions several things happen on screen. The in-game avatar is an adventurer and travelling across a vast land (possibly with a band of dependent party members, making setting of quests easier with motivation to complete them), and therefore logging a distance traveled by foot input by the player would move the avatar across a map \footnote{Ideally across a visual map, however this will only be a feature if time permits}. Additionally the increases in stats are based on probability, thus for example running for an hour would have a 80\% chance of increasing the stamina stat under Athletic/Wellness while walking for the same hour would have a 30\% chance of increasing the same stat. 
+
+Each increase in stat counts as a point both under one of the three main categories and overall. Players can compare their avatars with others to see who is the best adventurer in the land under any of the categories (Academic, Athletic, Professional, Overall) and if time permits further filters will be added to allow cases where the user would like to see who has the best avatar in Scotland.
 
 \subsection{Technical Overview}
-Here I go about the tools and languages I intend to use and why I wil ask most of my questions here
+This is concerned with a technical overview of the tools and the process I intend to use to realise the basic requirements set out above. Since this is my first time using many of the tools and technologies I estimate that more time will be spent on learning and understanding these technologies, rather than implementation.
+
+As mentioned in the overview Python 2.7 will be the main language of implementation as I am familiar with the language and is the language of choice for the Django Web Application Framework.
 
 \section{Development Schedule}
-How I plan to schedule my work
+
+\subsection{Development Stage 0: Basic Log-in}
+
+\subsection{Development Stage 1: Basic Access to Avatar}
+
+\subsection{•}
 
 \section{Final Thoughts \& Questions}
 
