@@ -96,50 +96,52 @@ Some extra stages have been noted to suggest improvements that can be made to th
 \subsection{Development Stage 4 (Extra): Quests}
 
 \begin{description}
-\item[\textbf{Intent}]
-\item[\textbf{Requirement}]
-\item[\textbf{Difficulty}]
-\item[\textbf{Questions}]
+\item[\textbf{Intent}] Solidify quest events, allow user to set own quests (which will not award extra points) and a general template for creating special event quests from admin side (for large amounts of points)
+\item[\textbf{Requirement}] Allow user to make quests, display current quests, and other quests if they are available (and allow user to accept them)
+\item[\textbf{Difficulty}] Understanding how forms work and seeing how to bind quests to certain users. How to display them, and show progress in them.
+\item[\textbf{Questions}] None
 \end{description}
 
 \subsection{Development Stage 5 (Extra): More Advanced Rankings}
 
 \begin{description}
-\item[\textbf{Intent}]
-\item[\textbf{Requirement}]
-\item[\textbf{Difficulty}]
-\item[\textbf{Questions}]
+\item[\textbf{Intent}] Allow users to see their ranks in individual attributes or filter by location if provided by the user.
+\item[\textbf{Requirement}] Allow above, and provide error if user doesn't have a location (which he/she doesn't to play the game)
+\item[\textbf{Difficulty}] Database queries generalization.
+\item[\textbf{Questions}] None
 \end{description}
 
 \subsection{Development Stage 6 (Extra): Non-Functional Requirement Analysis and Redesign}
 
 \begin{description}
-\item[\textbf{Intent}]
-\item[\textbf{Requirement}]
-\item[\textbf{Difficulty}]
-\item[\textbf{Questions}]
+\item[\textbf{Intent}] Redesign the web-site/-application to make UI more user friendly
+\item[\textbf{Requirement}] None
+\item[\textbf{Difficulty}]Learning good design principles
+\item[\textbf{Questions}] How do I test this? From my experience, a manual testing procedure is given to a person to manually test the application and if there is any problem following the instructions there is either a failure in the manual or the UI is not intuitive enough.
 \end{description}
 
 \subsection{Development Stage 7 (Extra): Advanced Metrics and Diagrams}
 
 \begin{description}
-\item[\textbf{Intent}]
-\item[\textbf{Requirement}]
-\item[\textbf{Difficulty}]
-\item[\textbf{Questions}]
+\item[\textbf{Intent}] Allow visualisation of changes in stats or recent input data, in graphs
+\item[\textbf{Requirement}] Allow users to access a seperate tab where historical data can be seen in graphs (much like the commit history or code lines in commits.
+\item[\textbf{Difficulty}] Understand how to keep historical data efficiently, and see how I can create graphs using this data (need to learn how to visualise data in the first place). May need to consider additional libraries to be added to the project. 
+\item[\textbf{Questions}] Is this a realistic additional feature to add this late in the development? Particularly the  
 \end{description}
 
 \textbf{More could be added but in the interest of keeping options open as requirements and needs change no more extra features added} 
 
 \section{Final Thoughts \& Questions}
 
-I find my sufficiently difficult to implement given my lack of experience and that it would reach the recommended 100 hours of work easily, yet I find my project interesting enough that this pursuit would be worthwhile. In this section I wanted to focus on some questions explicitly.
+I find my project sufficiently difficult to implement given my lack of experience in web development and web technologies in general and that it would reach the recommended 100 hours of work easily, yet I find my project interesting enough that this pursuit would be worthwhile. In this section I wanted to focus on any last final questions.
 
 Due to the lack of knowledge I have several questions about best practices in keeping a repository or organising my files:
 
 \begin{itemize}
 \item Would it be ok to leave my database tables in the repository until release or submission?
 \item I might change some of my requirements drastically for some additional features I would like to add, in this case may I contact you and have this reflect in the final grading instead of being downgraded for not following some of my proposal plans?
+\item Would another DBMS be more suitable for my project? With large tables and many calls for data extraction?
+\item If I do intend to use icons or art pieces as resources should they be included in the repository?
 \end{itemize}
 
 \end{document}
