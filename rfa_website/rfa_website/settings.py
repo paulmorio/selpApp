@@ -36,6 +36,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'real_fantasy_adventure_app',
 )
 
 MIDDLEWARE_CLASSES = (
