@@ -5,8 +5,9 @@ from django.utils import timezone
 
 # Avatar model
 class Avatar(models.Model):
-	"""The Avatar is the User's character within the game"""
-	username = models.ForeignKey("auth.User")
+	"""The Avatar is the User's character/profile within the game"""
+	user = models.ForeignKey("auth.User")
+	username = CharField(max_length=80)
 	level = models.IntegerField(default=1)
 	created_date = models.DateTimeField(default=timezone.now)
 
