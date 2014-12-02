@@ -11,3 +11,6 @@
 
 # IDE files
 .idea
+
+# Project and App Migrations
+rfa_website/real_fantasy_adventure_app/migrations/
