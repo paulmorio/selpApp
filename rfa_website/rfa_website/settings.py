@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',  
     'real_fantasy_adventure_app',
+    'django_markdown',
 )
 
 MIDDLEWARE_CLASSES = (

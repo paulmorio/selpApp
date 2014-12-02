@@ -1,8 +1,8 @@
 from django.contrib import admin
 from . import models
+from django_markdown.admin import MarkdownModelAdmin
 
-
-class QuestAdmin(admin.ModelAdmin):
+class QuestAdmin(MarkdownModelAdmin):
 	list_display = ("title", "created_date")
 	prepopulated_fields = {"slug": ("title",)} #automatically populates the slug with JavaScript in admin
 
