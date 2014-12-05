@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+
+{% load static %} 
+
 <html>
     <head>real_fantasy_adventure_app
         <title>real_fantasy_adventure_app</title>
@@ -8,6 +11,7 @@
         <h1>real_fantasy_adventure_app says...</h1>
         hello world! <strong>{{ boldmessage }}</strong><br />
         <a href="/real_fantasy_adventure_app/about/">About</a><br />
+        <img src="{% static "einekleine.jpg" %}" alt="Picture of Cover" />     
     </body>
 
 </html>
