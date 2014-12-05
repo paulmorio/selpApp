@@ -1,5 +1,8 @@
 # Git will ignore the files placed here
 
+# Python bytecode files
+*.pyc
+
 # Editor back-up files
 ~*
 
