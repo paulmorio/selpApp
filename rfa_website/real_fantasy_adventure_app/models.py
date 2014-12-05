@@ -1,18 +1,6 @@
 from django.db import models
 from django.utils import timezone
 
-#Avatar model
-# class Avatar(models.Model):
-# 	"""The Avatar is the User's character/profile within the game"""
-# 	realUser = models.ForeignKey(User)
-
-# 	biography = models.TextField(blank=True)
-# 	level = models.IntegerField(default=1)
-# 	created_date = models.DateTimeField(dauto_now_add=True)
-# 	modified_date = models.DateTimeField(auto_now=True)
-
-# 	def __str__(self):
-# 		return __str__(realUser)
 #####################################
 ######         AVATARS         ######
 #####################################
@@ -21,7 +9,7 @@ class AvatarQuerySet(models.QuerySet):
 		return self.filter(confirm=True)
 
 # Avatar Model
-class Avatar(object):
+class Avatar(models.Model):
 	"""docstring for Avatar"""
 	# General
 	name = models.CharField(max_length=200)
