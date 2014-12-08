@@ -1,7 +1,6 @@
 from django.test import TestCase
 from django.contrib.auth import get_user_model
-from . models import Quest
-from . models import Avatar
+from . models import Quest, Avatar
 
 # TestCases for Quest Entries
 class QuestEntryTest(TestCase):

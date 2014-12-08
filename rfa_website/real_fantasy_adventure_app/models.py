@@ -34,9 +34,9 @@ class Avatar(models.Model):
 	# Connection to its queryset for admin tasks
 	objects = AvatarQuerySet.as_manager()
 
+	# For more helpful errors
 	def __str__(self):
 		return self.name
-
 	def __unicode__(self):
 		return self.name
 
@@ -82,10 +82,9 @@ class Quest(models.Model):
 	# Connection to Queryset for admin tasks
 	objects = QuestQuerySet.as_manager()
 
-
+	# For more helpful errors.
 	def __str__(self):
 		return self.title
-
 	def __unicode__(self):
 		return self.title
 	
