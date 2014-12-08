@@ -14,6 +14,7 @@ class Avatar(models.Model):
 	# General
 	name = models.CharField(max_length=200)
 	bio = models.TextField()
+	confirm = models.BooleanField(default=False)
 
 	# Level (important to access Quests)
 	level = models.IntegerField(default=1)
@@ -58,7 +59,12 @@ class Quest(models.Model):
 	description = models.TextField()
 	publish = models.BooleanField(default=False)
 
-	# Point Categories
+	# Minimum Required Points to Vieq Quests
+	min_num_professional_points = models.IntegerField(default=1)
+	min_num_athletic_points = models.IntegerField(default=1)
+	min_num_academic_points = models.IntegerField(default=1)
+
+	# Rewarding Points
 	num_professional_points = models.IntegerField(default=0)
 	num_athletic_points = models.IntegerField(default=0)
 	num_academic_points = models.IntegerField(default=0)
@@ -73,9 +79,6 @@ class Quest(models.Model):
 	# Connection to Queryset for admin tasks
 	objects = QuestQuerySet.as_manager()
 
-	# ONCE AVATAR HAS BEEN Makde
-	#min_Avatar_Level_Requirement = models.IntegerField(default=1)
-	#rewardPoints = 
 
 	def __str__(self):
 		return self.title
