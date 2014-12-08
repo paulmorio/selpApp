@@ -37,6 +37,9 @@ class Avatar(models.Model):
 	def __str__(self):
 		return self.name
 
+	def __unicode__(self):
+		return self.name
+
 	def get_total_points():
 		return num_professional_points + num_academic_points + num_athletic_points
 
@@ -81,6 +84,9 @@ class Quest(models.Model):
 
 
 	def __str__(self):
+		return self.title
+
+	def __unicode__(self):
 		return self.title
 	
 	class Meta:
