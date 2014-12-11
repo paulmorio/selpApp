@@ -1,17 +1,42 @@
 <!DOCTYPE html>
-
-{% load static %} 
-
 <html>
-    <head>real_fantasy_adventure_app
-        <title>real_fantasy_adventure_app</title>
+    <head>
+        <title>Real Fantasy Adventure</title>
     </head>
 
     <body>
-        <h1>real_fantasy_adventure_app says...</h1>
-        hello world! <strong>{{ boldmessage }}</strong><br />
-        <a href="/real_fantasy_adventure_app/about/">About</a><br />
-        <img src="{% static "einekleine.jpg" %}" alt="Picture of Cover" />     
-    </body>
+        <h1>Real Fantasy Adventure says...hello world!</h1>
 
+        {% if academics %}
+            <ul>
+                {% for category in academics %}
+                <li>{{ category.name }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <strong>There are no academics present.</strong>
+        {% endif %}
+
+        {% if professionals %}
+            <ul>
+                {% for category in professionals %}
+                <li>{{ category.name }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <strong>There are no professionals present.</strong>
+        {% endif %}
+
+        {% if athletes %}
+            <ul>
+                {% for category in athletes %}
+                <li>{{ category.name }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <strong>There are no athletes present.</strong>
+        {% endif %}
+
+        <a href="/real_fantasy_adventure_app/about/">About</a>
+    </body>
 </html>
