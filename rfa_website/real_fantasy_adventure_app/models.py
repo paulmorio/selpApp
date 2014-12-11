@@ -126,6 +126,8 @@ class MyQuest(models.Model):
 	modified_date = models.DateTimeField(auto_now=True)
 
 	#For helpful errors
+	def __str__(self):
+		return self.title
 	def __unicode__(self):
 		return self.title
 
