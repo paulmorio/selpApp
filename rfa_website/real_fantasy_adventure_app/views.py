@@ -34,8 +34,9 @@ def avatarProfile(request, avatar_name_slug):
         # Can we find a avatar name slug with the given name?
         # If we can't, the .get() method raises a DoesNotExist exception.
         # So the .get() method returns one model instance or raises an exception.
-        avatar = Avatar.objects.get(slug=avatar_name_slug)
-                context_dict['avatar_name'] = avatar.name
+        avatar = Avatar.objects.get(slug=avatar_name_slug) 
+
+        context_dict['avatar_name'] = avatar.name
 
         # Retrieve all of the associated myQuests.
         # Note that filter returns >= 1 model instance.
@@ -53,4 +54,4 @@ def avatarProfile(request, avatar_name_slug):
         pass
 
     # Go render the response and return it to the client.
-    return render(request, 'rango/avatarProfile.html', context_dict)
+    return render(request, 'real_fantasy_adventure_app/avatarProfile.html', context_dict)
