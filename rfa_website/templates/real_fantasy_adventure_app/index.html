@@ -9,8 +9,8 @@
 
         {% if academics %}
             <ul>
-                {% for category in academics %}
-                <li>{{ category.name }}</li>
+                {% for academic in academics %}
+                <li><a href="/real_fantasy_adventure_app/avatar/{{ academic.slug }}">{{ academic.name }}</a></li>
                 {% endfor %}
             </ul>
         {% else %}
@@ -19,8 +19,8 @@
 
         {% if professionals %}
             <ul>
-                {% for category in professionals %}
-                <li>{{ category.name }}</li>
+                {% for professional in professionals %}
+                <li><a href="/real_fantasy_adventure_app/avatar/{{ professional.slug }}">{{ professional.name }}</a></li>
                 {% endfor %}
             </ul>
         {% else %}
@@ -29,8 +29,8 @@
 
         {% if athletes %}
             <ul>
-                {% for category in athletes %}
-                <li>{{ category.name }}</li>
+                {% for athlete in athletes %}
+                <li><a href="/real_fantasy_adventure_app/avatar/{{ athlete.slug }}">{{ athlete.name }}</a></li>
                 {% endfor %}
             </ul>
         {% else %}
