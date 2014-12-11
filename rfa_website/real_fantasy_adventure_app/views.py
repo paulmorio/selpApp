@@ -20,9 +20,15 @@ def index(request):
     # The context contains information such as the client's machine details, for example.
     context = RequestContext(request)
 
-    # Construct a dictionary to pass to the template engine as its context.
-    # Note the key boldmessage is the same as {{ boldmessage }} in the template!
-    context_dict = {'boldmessage': "I am bold font from the context"}
+    # make a list of the top 5 players by points
+    avatars_by_academic = models.Avatar.objects.order_by('-num_academic_points')[:5]
+    avatars_by_professional = models.Avatar.objects.order_by('-num_professional_points')[:5]
+    avatars_by_athletic = models.Avatar.objects.order_by('-num_athletic_points')[:5]
+
+    # make a context dictionary for each
+    context_dict_academic = {'avatars': avatars_by_academic}
+    context_dict_professional = {'avatars': avatars_by_professional}
+    context_dict_athletic = {'avatars': avatars_by_athletic}
 
     # Return a rendered response to send to the client.
     # We make use of the shortcut function to make our lives easier.
@@ -34,3 +40,5 @@ def about(request):
 	context_dict = {'boldthing' : "You are an adventurer"}
 
 	return render_to_response('real_fantasy_adventure_app/about.html', context_dict, context)
+
+
