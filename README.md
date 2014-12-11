@@ -13,6 +13,15 @@ setup of the entire project can be found under the
 All the tests can be run against the project after build procedure is completed via the <TO DO> file.
 The individual tests can be found in the tests directory.
 
+tests can be run with 
+python manage.py test real_fantasy_adventure_app
+
+coverage can be calculated via the coverage package and run with this command
+coverage run --source='.' manage.py test real_fantasy_adventure_app
+
+the coverage report can be read with 
+coverage report
+
 #### Manual Testing ####
 As there are some tests that can only be performed with the human eye and even create cases, a manual
 test procedure document has been placed in the tests directory.
