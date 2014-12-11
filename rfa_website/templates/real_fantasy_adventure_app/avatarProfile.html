@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Real Fantasy Adventure</title>
+    </head>
+
+    <body>
+        <h1>{{ avatar_name }}</h1>
+        {% if avatar %}
+            {% if myQuests %}
+            <ul>
+                {% for myQuest in myQuests %}
+                <li><a href="{{ myQuest.url }}">{{ myQuest.title }}</a></li>
+                {% endfor %}
+            </ul>
+            {% else %}
+                <strong>No myQuests currently in avatar.</strong>
+            {% endif %}
+        {% else %}
+            The specified avatar {{ avatar_name }} does not exist!
+        {% endif %}
+    </body>
+</html>
