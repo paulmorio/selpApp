@@ -125,6 +125,9 @@ class MyQuest(models.Model):
 	created_date = models.DateTimeField(auto_now_add=True)
 	modified_date = models.DateTimeField(auto_now=True)
 
+	# Connection to Queryset for admin tasks
+	objects = MyQuestQuerySet.as_manager()	
+
 	#For helpful errors
 	def __str__(self):
 		return self.title
