@@ -1,13 +1,21 @@
 <!DOCTYPE html>
+
+{% load static %}
+
 <html>
     <head>
         <title>Real Fantasy Adventure</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/real_fantasy_adventure_base.css' %}">
+        <link href='http://fonts.googleapis.com/css?family=Cinzel:400,700' rel='stylesheet' type='text/css'>
     </head>
 
     <body>
-        <h1>Real Fantasy Adventure says...hello world!</h1>
+        <div class="page-header">
+            <h1><a href="/real_fantasy_adventure_app/index"> Real Fantasy Adventure </a></h1>
+        </div>
 
         {% if academics %}
+        <h2>Top 5 Academics</h2>
             <ul>
                 {% for academic in academics %}
                 <li><a href="/real_fantasy_adventure_app/avatar/{{ academic.slug }}">{{ academic.name }}</a></li>
@@ -18,6 +26,7 @@
         {% endif %}
 
         {% if professionals %}
+        <h2>Top 5 Professionals</h2>
             <ul>
                 {% for professional in professionals %}
                 <li><a href="/real_fantasy_adventure_app/avatar/{{ professional.slug }}">{{ professional.name }}</a></li>
@@ -28,6 +37,7 @@
         {% endif %}
 
         {% if athletes %}
+        <h2>Top 5 Atletes</h2>
             <ul>
                 {% for athlete in athletes %}
                 <li><a href="/real_fantasy_adventure_app/avatar/{{ athlete.slug }}">{{ athlete.name }}</a></li>

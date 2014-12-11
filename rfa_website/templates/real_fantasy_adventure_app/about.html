@@ -4,15 +4,21 @@
 
 <html>
 	<head>
-		<title>About Page</title>
+		<title>About RFA</title>
+		<link rel="stylesheet" type="text/css" href="{% static 'css/real_fantasy_adventure_base.css' %}">
+		<link href='http://fonts.googleapis.com/css?family=Cinzel:400,700' rel='stylesheet' type='text/css'>
 	</head>
 
 	<body>
-		<h1> About Real Fantasy Adventure </h1>
-		<h2>Story</h2>
-		<p>You are an Adventurer</p> <br />
-		<strong>{{ boldthing }}</strong>
-		<img src="{% static "einekleine.jpg" %}" alt = "Picture of Cover" />
+		<div class="page-header">
+			<h1><a href="/real_fantasy_adventure_app/index"> Real Fantasy Adventure </a></h1>
+		</div>
+		<div class="page_content">
+			<h2>Story</h2>
+			<p>You are an Adventurer</p> <br />
+			<strong>{{ boldthing }}</strong>
+			<img src="{% static "einekleine.jpg" %}" alt = "Picture of Cover" />
+		</div>
 	</body>
 	
 </html>

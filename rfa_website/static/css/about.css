@@ -1,0 +1,17 @@
+h1 a {
+	color: #FFFFFF;
+	font-family: 'Cinzel', serif;
+}
+
+body {
+	background-color: #CDCDC5;
+	padding-left: 10%;
+	padding-right: 10%;
+}
+
+.page-header {
+    background-color: #3E3E3B;
+    margin-top: 0;
+    text-align: center;
+    padding: 20px 20px 20px 40px;
+}
