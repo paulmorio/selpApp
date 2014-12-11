@@ -10,6 +10,11 @@ class AvatarAdmin(MarkdownModelAdmin):
 	list_display = ("name", "created_date")
 	prepopulated_fields = {"slug": ("name",)}
 
+class MyQuestAdmin(MarkdownModelAdmin):
+	list_display = ("title", "created_date")
+	prepopulated_fields = {"slug": ("title",)}
+
 # Register your models here.
 admin.site.register(models.Quest, QuestAdmin)
 admin.site.register(models.Avatar, AvatarAdmin)
+admin.site.register(models.MyQuest, MyQuestAdmin)

@@ -92,3 +92,45 @@ class Quest(models.Model):
 		verbose_name = "Quest Entry"
 		verbose_name_plural = "Quest Entries"
 		ordering = ["-created_date"]
+
+
+#####################################
+######        MyQuests         ######
+#####################################
+# MyQuest Query Set
+class MyQuestQuerySet(models.QuerySet):
+	def published(self):
+		return self.filter(publish=True)
+
+# MyQuest Model
+class MyQuest(models.Model):
+	"""MyQuest are Quests written by avatars for themselves to achieve, however
+	 they are not subclasses as they should not include some fields Quests has"""
+	avatar = models.ForeignKey(Avatar)
+	title = models.CharField(max_length=256)
+	description = models.TextField()
+	publish = models.BooleanField(default=False)
+
+	# Requirements for clearing
+	req_professional_points = models.IntegerField(default=1)
+	req_athletic_points = models.IntegerField(default=1)
+	req_academic_points = models.IntegerField(default=1)
+
+	# Reward Points (how to model this?)
+
+	# URL Friendly Reference
+	slug = models.SlugField(max_length=200, unique=True)
+
+	#Date Attributes
+	created_date = models.DateTimeField(auto_now_add=True)
+	modified_date = models.DateTimeField(auto_now=True)
+
+	#For helpful errors
+	def __unicode__(self):
+		return self.title
+
+	class Meta:
+		verbose_name = "MyQuest Entry"
+		verbose_name_plural = "MyQuest Entries"
+		ordering = ["-created_date"]
+

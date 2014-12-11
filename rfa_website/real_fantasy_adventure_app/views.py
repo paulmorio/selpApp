@@ -22,18 +22,18 @@ def index(request):
 
     # make a list of the top 5 players by points
     avatars_by_academic = models.Avatar.objects.order_by('-num_academic_points')[:5]
-    avatars_by_professional = models.Avatar.objects.order_by('-num_professional_points')[:5]
-    avatars_by_athletic = models.Avatar.objects.order_by('-num_athletic_points')[:5]
+    #avatars_by_professional = models.Avatar.objects.order_by('-num_professional_points')[:5]
+    #avatars_by_athletic = models.Avatar.objects.order_by('-num_athletic_points')[:5]
 
     # make a context dictionary for each
     context_dict_academic = {'avatars': avatars_by_academic}
-    context_dict_professional = {'avatars': avatars_by_professional}
-    context_dict_athletic = {'avatars': avatars_by_athletic}
+    #context_dict_professional = {'avatars': avatars_by_professional}
+    #context_dict_athletic = {'avatars': avatars_by_athletic}
 
     # Return a rendered response to send to the client.
     # We make use of the shortcut function to make our lives easier.
     # Note that the first parameter is the template we wish to use.
-    return render_to_response('real_fantasy_adventure_app/index.html', context_dict, context)
+    return render_to_response('real_fantasy_adventure_app/index.html', context_dict_academic, context)
 
 def about(request):
 	context = RequestContext(request)
