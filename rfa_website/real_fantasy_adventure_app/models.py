@@ -13,9 +13,16 @@ class AvatarQuerySet(models.QuerySet):
 class Avatar(models.Model):
 	"""docstring for Avatar"""
 	# Links Avatar to User Model instnace
-	user = models.OneToOneField(User)
-	website = models.URLField(blank=True)
-	userpicture = models.ImageField(upload_to='avatar-images')
+	user = models.OneToOneField(User, null=True)
+
+	# Additional fields should users feel like it.
+	website = models.URLField(blank=True, null=True)
+	# TODO allow users to upload images to their profiles, in order to do that we need
+	# a static media server to reroute all files uploaded to the media directory 
+	# found on the project level.
+	#userpicture = models.ImageField(upload_to='avatar-images', blank=True)
+	
+	# Avatar fields from here
 	name = models.CharField(max_length=200)
 	bio = models.TextField()
 	confirm = models.BooleanField(default=False)
@@ -40,9 +47,9 @@ class Avatar(models.Model):
 
 	# For more helpful errors
 	def __str__(self):
-		return self.name
+		return self.user.username
 	def __unicode__(self):
-		return self.name
+		return self.user.username
 
 	def get_total_points():
 		return num_professional_points + num_academic_points + num_athletic_points
