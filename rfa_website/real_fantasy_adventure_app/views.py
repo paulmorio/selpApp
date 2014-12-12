@@ -4,6 +4,8 @@ from django.views import generic
 from django.contrib.auth.models import User
 from real_fantasy_adventure_app.models import Quest, Avatar, MyQuest
 from real_fantasy_adventure_app.forms import AvatarForm, UserForm
+from django.contrib.auth import authenticate, login
+from django.http import HttpResponseRedirect, HttpResponse
 
 # Create your views here.
 
@@ -94,3 +96,31 @@ def register(request):
 
     # render depending on the context
     return render(request, 'real_fantasy_adventure_app/register.html', {'user_form': user_form, 'avatar_form': avatar_form, 'registered': registered})
+
+def user_login(request):
+
+    if (request.method == 'POST'):
+        username = request.POST['username']
+        password = request.POST['password']
+
+        # the authenticate method returns a user object if the credentials exist within the database
+        user = authenticate(username=username, password=password)
+
+        if user:
+            # is the user active?
+            if user.is_active:
+                # if the account is active and credentials match we login the user
+                login(request,user)
+                return HttpResponseRedirect('/real_fantasy_adventure_app/')
+            else:
+                # an inactive account was used so login shouldnt be possible
+                return HttpResponse('This account has been deactivated')
+        else:
+            # login credentials were incorrect
+            print "Invalid login credentials: {0}, {1}".format(username, password)
+            return HttpResponse('Invalid login credentials')
+
+    else:
+        # the request method was not of type POST, thus we show the login forms
+        return render(request, 'real_fantasy_adventure_app/login.html', {})
+

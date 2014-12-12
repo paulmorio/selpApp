@@ -12,13 +12,18 @@
     <body>
         <div class="page-header">
             <h1><a href="/real_fantasy_adventure_app/"> Real Fantasy Adventure </a></h1>
+            {% if user.is_authenticated %}
+            <h1>Hello {{ user.username }}!</h1>
+            {% else %}
+            <h1>Hello Anonymous would you like to login?</h1>
+            {% endif %}
         </div>
 
         {% if academics %}
         <h2>Top 5 Academics</h2>
             <ul>
                 {% for academic in academics %}
-                <li><a href="/real_fantasy_adventure_app/avatar/{{ academic.slug }}">{{ academic.name }}</a></li>
+                <li><a href="/real_fantasy_adventure_app/avatar/{{ academic.slug }}">{{ academic.nickname }}</a></li>
                 {% endfor %}
             </ul>
         {% else %}
@@ -29,7 +34,7 @@
         <h2>Top 5 Professionals</h2>
             <ul>
                 {% for professional in professionals %}
-                <li><a href="/real_fantasy_adventure_app/avatar/{{ professional.slug }}">{{ professional.name }}</a></li>
+                <li><a href="/real_fantasy_adventure_app/avatar/{{ professional.slug }}">{{ professional.nickname }}</a></li>
                 {% endfor %}
             </ul>
         {% else %}
@@ -40,14 +45,15 @@
         <h2>Top 5 Atletes</h2>
             <ul>
                 {% for athlete in athletes %}
-                <li><a href="/real_fantasy_adventure_app/avatar/{{ athlete.slug }}">{{ athlete.name }}</a></li>
+                <li><a href="/real_fantasy_adventure_app/avatar/{{ athlete.slug }}">{{ athlete.nickname }}</a></li>
                 {% endfor %}
             </ul>
         {% else %}
             <strong>There are no athletes present.</strong>
         {% endif %}
 
-        <a href="/real_fantasy_adventure_app/about/">About</a>
-        <a href="/real_fantasy_adventure_app/register/">Register</a>
+        <a href="/real_fantasy_adventure_app/about/">About</a> <br />
+        <a href="/real_fantasy_adventure_app/register/">Register</a> <br />
+        <a href="/real_fantasy_adventure_app/login/">Login</a> <br />
     </body>
 </html>
