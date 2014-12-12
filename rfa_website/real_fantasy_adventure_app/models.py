@@ -23,7 +23,6 @@ class Avatar(models.Model):
 	#userpicture = models.ImageField(upload_to='avatar-images', blank=True)
 	
 	# Avatar fields from here
-	name = models.CharField(max_length=200)
 	bio = models.TextField()
 	confirm = models.BooleanField(default=False)
 

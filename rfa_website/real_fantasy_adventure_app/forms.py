@@ -1,16 +1,22 @@
-# from django import forms
-# from real_fantasy_adventure_app.models import Avatar, Quest, MyQuest
+from django import forms
+from real_fantasy_adventure_app.models import Avatar, Quest, MyQuest
 
-# class AvatarForm(forms.ModelForm):
-# 	"""docstring for AvatarForm"""
-# 	name = forms.CharField(max_length=200, help_text="Please Enter a UserName for the Avatar")
-# 	bio = forms.TextField(help_text="Write a little about yourself or your avatar")
+class UserForm(forms.ModelForm):
+	password = forms.CharField(widget=forms.PasswordInput())
 
-# 	slug = forms.SlugField(widget=forms.HiddenInput(), required=False)
+	class Meta:
+		model = User
+		fields = ('username', 'email', 'password')
 
-# 	class Meta:
-# 		model = Avatar
-# 				fields = ('name',)
+class AvatarForm(forms.ModelForm):
+	"""docstring for AvatarForm"""
+	bio = forms.TextField(help_text="Write a little about yourself or your avatar")
+
+	slug = forms.SlugField(widget=forms.HiddenInput(), required=False)
+
+	class Meta:
+		model = Avatar
+		fields = ('name', 'bio')
 
 
 # class QuestForm(forms.ModelForm):
