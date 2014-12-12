@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 #####################################
 ######         AVATARS         ######
@@ -11,7 +12,10 @@ class AvatarQuerySet(models.QuerySet):
 # Avatar Model
 class Avatar(models.Model):
 	"""docstring for Avatar"""
-	# General
+	# Links Avatar to User Model instnace
+	user = models.OneToOneField(User)
+	website = models.URLField(blank=True)
+	userpicture = models.ImageField(upload_to='avatar-images')
 	name = models.CharField(max_length=200)
 	bio = models.TextField()
 	confirm = models.BooleanField(default=False)
