@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from real_fantasy_adventure_app.models import Avatar, Quest, MyQuest
 
 class UserForm(forms.ModelForm):
+	"""docstring for UserForm"""
 	password = forms.CharField(widget=forms.PasswordInput())
 
 	class Meta:
@@ -20,6 +21,8 @@ class AvatarForm(forms.ModelForm):
 		model = Avatar
 		fields = ('nickname', 'bio')
 
+class MyQuestForm(forms.ModelForm):
+	"""docstring for MyQuestForm"""
 
 # class QuestForm(forms.ModelForm):
 # 	"""docstring for QuestForm"""
