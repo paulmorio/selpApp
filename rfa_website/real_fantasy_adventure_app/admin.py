@@ -7,8 +7,8 @@ class QuestAdmin(MarkdownModelAdmin):
 	prepopulated_fields = {"slug": ("title",)} #automatically populates the slug with JavaScript in admin
 
 class AvatarAdmin(MarkdownModelAdmin):
-	list_display = ("name", "created_date")
-	prepopulated_fields = {"slug": ("name",)}
+	list_display = ("nickname", "created_date")
+	#prepopulated_fields = {"slug": ("nickname",)}
 
 class MyQuestAdmin(MarkdownModelAdmin):
 	list_display = ("title", "created_date")

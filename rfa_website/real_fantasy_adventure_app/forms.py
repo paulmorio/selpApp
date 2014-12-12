@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.models import User
 from real_fantasy_adventure_app.models import Avatar, Quest, MyQuest
 
 class UserForm(forms.ModelForm):
@@ -10,13 +11,14 @@ class UserForm(forms.ModelForm):
 
 class AvatarForm(forms.ModelForm):
 	"""docstring for AvatarForm"""
-	bio = forms.TextField(help_text="Write a little about yourself or your avatar")
+	nickname = forms.CharField(max_length=80, help_text="Give yourself a nickname, if you cant think of one, this can just be your username")
+	bio = forms.CharField(widget=forms.Textarea, help_text="Write a little about yourself or your avatar")
 
 	slug = forms.SlugField(widget=forms.HiddenInput(), required=False)
 
 	class Meta:
 		model = Avatar
-		fields = ('name', 'bio')
+		fields = ('nickname', 'bio')
 
 
 # class QuestForm(forms.ModelForm):

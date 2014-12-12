@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.template.defaultfilters import slugify
 
 #####################################
 ######         AVATARS         ######
@@ -13,16 +14,17 @@ class AvatarQuerySet(models.QuerySet):
 class Avatar(models.Model):
 	"""docstring for Avatar"""
 	# Links Avatar to User Model instnace
-	user = models.OneToOneField(User, null=True)
+	user = models.OneToOneField(User)
 
 	# Additional fields should users feel like it.
-	website = models.URLField(blank=True, null=True)
+	# website = models.URLField(blank=True, null=True)
 	# TODO allow users to upload images to their profiles, in order to do that we need
 	# a static media server to reroute all files uploaded to the media directory 
 	# found on the project level.
 	#userpicture = models.ImageField(upload_to='avatar-images', blank=True)
 	
 	# Avatar fields from here
+	nickname = models.CharField(max_length=80)
 	bio = models.TextField()
 	confirm = models.BooleanField(default=False)
 
@@ -39,10 +41,15 @@ class Avatar(models.Model):
 	modified_date = models.DateTimeField(auto_now=True)
 
 	# URL Friendly Reference (for use with profile pages)
-	slug = models.SlugField(max_length=200, unique=True)
+	slug = models.SlugField(max_length=80, unique=True)
 
 	# Connection to its queryset for admin tasks
 	objects = AvatarQuerySet.as_manager()
+
+	# new save function
+	def save(self, *args, **bargs):
+		self.slug = slugify(self.nickname)
+		super(Avatar, self).save(*args, **bargs)
 
 	# For more helpful errors
 	def __str__(self):
