@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import generic
 from real_fantasy_adventure_app.models import Quest, Avatar, MyQuest
+#from real_fantasy_adventure_app.forms import QuestForm, AvatarForm, MyQuestForm
 
 # Create your views here.
 
@@ -55,3 +56,18 @@ def avatarProfile(request, avatar_name_slug):
 
     # Go render the response and return it to the client.
     return render(request, 'real_fantasy_adventure_app/avatarProfile.html', context_dict)
+
+# def add_myQuest(request, avatar_name_slug):
+#     if request.method == 'POST':
+#         form = MyQuestForm(request.POST)
+
+#         if form.is_valid():
+#             form.save(commit=True)
+#             return avatarProfile(request, avatar_name_slug)
+#         else:
+#             print form.errors
+            
+#     else:
+#         form = MyQuestForm()
+
+#     return render(request, 'real_fantasy_adventure_app/add_myQuest.html', {'form':form}})
