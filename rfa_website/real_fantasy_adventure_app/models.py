@@ -62,7 +62,7 @@ class Quest(models.Model):
 	description = models.TextField()
 	publish = models.BooleanField(default=False)
 
-	# Minimum Required Points to Vieq Quests
+	# Minimum Required Points to View Quests
 	min_num_professional_points = models.IntegerField(default=1)
 	min_num_athletic_points = models.IntegerField(default=1)
 	min_num_academic_points = models.IntegerField(default=1)
