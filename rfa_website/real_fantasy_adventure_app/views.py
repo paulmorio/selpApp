@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.views import generic
 from django.contrib.auth.models import User
 from real_fantasy_adventure_app.models import Quest, Avatar, MyQuest
-from real_fantasy_adventure_app.forms import AvatarForm, UserForm
+from real_fantasy_adventure_app.forms import AvatarForm, UserForm, MyQuestForm
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
 
@@ -51,6 +51,7 @@ def avatarProfile(request, avatar_name_slug):
         # We also add the avatar object from the database to the context dictionary.
         # We'll use this in the template to verify that the avatar exists.
         context_dict['avatar'] = avatar
+        context_dict['avatar_name_slug'] = avatar_name_slug
 
     except Avatar.DoesNotExist:
         # We get here if we didn't find the specified avatar.
@@ -123,4 +124,29 @@ def user_login(request):
     else:
         # the request method was not of type POST, thus we show the login forms
         return render(request, 'real_fantasy_adventure_app/login.html', {})
+
+def add_myQuest(request, avatar_name_slug):
+    try:
+        avatar = Avatar.objects.get(slug=avatar_name_slug)
+    except Avatar.DoesNotExist:
+        avatar = None
+
+    if (request.method == 'POST'):
+        form = MyQuestForm(request.POST)
+        if form.is_valid():
+            if avatar:
+                    myQuest = form.save(commit=False)
+                    myQuest.avatar = avatar
+                    myQuest.save()
+                    # probably better to use a redirect here.
+                    return avatarProfile(request, avatar_name_slug)
+            else:
+                print form.errors
+    else:
+        form = MyQuestForm()
+        context_dict = {'form': form, 'avatar': avatar, 'avatar_name_slug': avatar_name_slug}
+
+    return render(request, 'real_fantasy_adventure_app/add_myQuest.html', context_dict)
+
+
 

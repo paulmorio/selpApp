@@ -23,6 +23,20 @@ class AvatarForm(forms.ModelForm):
 
 class MyQuestForm(forms.ModelForm):
 	"""docstring for MyQuestForm"""
+	title = forms.CharField(max_length=256, help_text="Give a title for your MyQuest")
+	description = forms.CharField(widget=forms.Textarea, help_text="Describe your MyQuest, its only visible by you so dont worry about spelling :)")
+
+	req_professional_points = forms.IntegerField(initial=0)
+	req_athletic_points = forms.IntegerField(initial=0)
+	req_academic_points = forms.IntegerField(initial=0)
+
+	slug = forms.SlugField(widget=forms.HiddenInput(), required=False)
+
+	class Meta:
+		model = MyQuest
+		fields = ('title', 'description', 'req_professional_points', 'req_athletic_points', 'req_academic_points')
+		exclude = ('avatar',)
+
 
 # class QuestForm(forms.ModelForm):
 # 	"""docstring for QuestForm"""

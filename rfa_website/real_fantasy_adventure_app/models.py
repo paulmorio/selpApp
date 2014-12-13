@@ -143,7 +143,12 @@ class MyQuest(models.Model):
 	modified_date = models.DateTimeField(auto_now=True)
 
 	# Connection to Queryset for admin tasks
-	objects = MyQuestQuerySet.as_manager()	
+	objects = MyQuestQuerySet.as_manager()
+
+	# new save function
+	def save(self, *args, **bargs):
+		self.slug = slugify(self.title)
+		super(MyQuest, self).save(*args, **bargs)
 
 	#For helpful errors
 	def __str__(self):
