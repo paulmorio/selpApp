@@ -1,10 +1,13 @@
-#README#
-##Software Large Engineering Practical Project for Paul Scherer (s1206798)##
-###UG3 2014-2015###
+# README #
+## Software Large Engineering Practical Project for Paul Scherer (s1206798) ##
+### UG3 2014-2015 ###
 
 **Project Name:**: Real Fantasy Adventure
 
 **Proposal Part 1**: Found under proposal.pdf or its source can be found under proposal.tex
+
+## USERAUTH ##
+currently using own implemented (django standard contrib auth) authentication, may use allauth if need arises, if ever, for facebook and open profile stuff
 
 ### Setup ###
 setup of the entire project can be found under the
