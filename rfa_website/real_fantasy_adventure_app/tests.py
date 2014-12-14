@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 from . models import Quest, Avatar, MyQuest
+from django.contrib.auth.models import User
 
 # TestCases for Quest Entries
 class QuestEntryTest(TestCase):
@@ -18,7 +19,8 @@ class QuestEntryTest(TestCase):
 class AvatarEntryTest(TestCase):
 
 	def test_create_unconfirmed(self):
-		avatar = Avatar(name="TestName", bio="Test Biography", confirm=False)
+		testUser = User.objects.create_user(username = "testUser", email="test@test.com", password="test1234")
+		avatar = Avatar(user=testUser, nickname="TestName", bio="Test Biography", confirm=False)
 		avatar.save()
 		self.assertEqual(Avatar.objects.all().count(), 1)
 		self.assertEqual(Avatar.objects.confirmed().count(), 0)
@@ -30,7 +32,8 @@ class AvatarEntryTest(TestCase):
 class MyQuestEntryTest(TestCase):
 	
 	def test_create_unpublished(self):
-		testAvatar = Avatar(name="TestName", bio="Test Biography", confirm=True)
+		testUser = User.objects.create_user(username = "testUser", email="test@test.com", password="test1234")
+		testAvatar = Avatar(user=testUser, nickname="TestName", bio="Test Biography", confirm=True)
 		testAvatar.save()
 		myQuest = MyQuest(avatar=testAvatar, title="TestTitle", description="Test Description", publish=False)
 		myQuest.save()
