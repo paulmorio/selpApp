@@ -4,8 +4,10 @@ from django.views import generic
 from django.contrib.auth.models import User
 from real_fantasy_adventure_app.models import Quest, Avatar, MyQuest
 from real_fantasy_adventure_app.forms import AvatarForm, UserForm, MyQuestForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
 
@@ -29,6 +31,10 @@ def about(request):
 
 	return render(request, 'real_fantasy_adventure_app/about.html', context_dict)
 
+def notLoggedIn(request):
+    return render(request, 'real_fantasy_adventure_app/notLoggedIn.html')
+
+@login_required(login_url='/real_fantasy_adventure_app/notLoggedIn/')
 def avatarProfile(request, avatar_name_slug):
 
     # Create a context dictionary which we can pass to the template rendering engine.
@@ -125,6 +131,12 @@ def user_login(request):
         # the request method was not of type POST, thus we show the login forms
         return render(request, 'real_fantasy_adventure_app/login.html', {})
 
+@login_required(login_url='/real_fantasy_adventure_app/')
+def user_logout(request):
+    # since the check if logged in is done beforehand we can just log the user out
+    logout(request)
+    return HttpResponseRedirect('/real_fantasy_adventure_app/')
+
 def add_myQuest(request, avatar_name_slug):
     try:
         avatar = Avatar.objects.get(slug=avatar_name_slug)
@@ -147,6 +159,8 @@ def add_myQuest(request, avatar_name_slug):
         context_dict = {'form': form, 'avatar': avatar, 'avatar_name_slug': avatar_name_slug}
 
     return render(request, 'real_fantasy_adventure_app/add_myQuest.html', context_dict)
+
+
 
 
 
