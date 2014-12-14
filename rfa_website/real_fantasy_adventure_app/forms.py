@@ -21,6 +21,12 @@ class AvatarForm(forms.ModelForm):
 		model = Avatar
 		fields = ('nickname', 'bio')
 
+	def clean_nickname(self):
+	    data = self.cleaned_data['nickname']
+	    if Avatar.objects.filter(nickname=data).exists():
+	        raise forms.ValidationError("This nickname is already being used")
+	    return data
+
 class MyQuestForm(forms.ModelForm):
 	"""docstring for MyQuestForm"""
 	title = forms.CharField(max_length=256, help_text="Give a title for your MyQuest")
