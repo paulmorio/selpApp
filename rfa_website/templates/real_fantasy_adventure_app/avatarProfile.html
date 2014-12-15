@@ -1,4 +1,28 @@
-<!DOCTYPE html>
+{% extends 'real_fantasy_adventure_app/base.html/' %}
+
+{% load static %}
+
+{% block title %}Avatar{% endblock %}
+
+{% block body_block %}
+    <h1>{{ avatar_name }}</h1>
+    {% if avatar %}
+        {% if myQuests %}
+        <ul>
+            {% for myQuest in myQuests %}
+            <li><a href="{{ myQuest.url }}">{{ myQuest.title }}</a></li>
+            {% endfor %}
+        </ul>
+        {% else %}
+            <strong>No myQuests currently in avatar.</strong>
+        {% endif %}
+    {% else %}
+        The specified avatar {{ avatar_name }} does not exist!
+    {% endif %}
+    <a href="/real_fantasy_adventure_app/avatar/{{ avatar_name }}/add_myQuest">Add MyQuest</a>
+{% endblock %}
+
+<!-- <!DOCTYPE html>
 
 {% load static %}
 
@@ -30,4 +54,4 @@
         {% endif %}
         <a href="/real_fantasy_adventure_app/avatar/{{ avatar_name }}/add_myQuest">Add MyQuest</a>
     </body>
-</html>
+</html> -->

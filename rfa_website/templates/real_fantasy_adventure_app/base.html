@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html>
+    <head>
+        <title>RFA - {% block title %}Real Fantasy Adventure{% endblock %}</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/real_fantasy_adventure_base.css' %}">
+        <link href='http://fonts.googleapis.com/css?family=Cinzel:400,700' rel='stylesheet' type='text/css'>
+    </head>
+
+    <body>
+        <div class="page-header">
+            <h1><a href="/real_fantasy_adventure_app/"> Real Fantasy Adventure </a></h1>
+            {% if user.is_authenticated %}
+            <h3>Hello {{ user.username }}!</h3>
+            {% else %}
+            <h3>Hello adventurer you are not logged in!</h3>
+            {% endif %}
+        </div>
+
+        <div>
+            {% block body_block %}{% endblock %}
+        </div>
+
+        <hr />
+
+        <div>
+            <ul>
+            {% if user.is_authenticated %}
+                <li><a href="/real_fantasy_adventure_app/logout/">Logout</a></li>
+            {% else %}
+	            <li><a href="/real_fantasy_adventure_app/register/">Register</a></li>
+	            <li><a href="/real_fantasy_adventure_app/login/">Log-In</a></li>
+            {% endif %}
+
+                <li><a href="/real_fantasy_adventure_app/about/">About</a></li>
+            </ul>
+        </div>
+    </body>
+</html>

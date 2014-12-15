@@ -1,24 +1,13 @@
-<!DOCTYPE html>
+{% extends 'real_fantasy_adventure_app/base.html/' %}
 
 {% load static %}
 
-<html>
-	<head>
-		<title>About RFA</title>
-		<link rel="stylesheet" type="text/css" href="{% static 'css/real_fantasy_adventure_base.css' %}">
-		<link href='http://fonts.googleapis.com/css?family=Cinzel:400,700' rel='stylesheet' type='text/css'>
-	</head>
+{% block title %}About{% endblock %}
 
-	<body>
-		<div class="page-header">
-			<h1><a href="/real_fantasy_adventure_app/"> Real Fantasy Adventure </a></h1>
-		</div>
-		<div class="page_content">
-			<h2>Story</h2>
-			<p>You are an Adventurer</p> <br />
-			<strong>{{ boldthing }}</strong>
-			<img src="{% static "einekleine.jpg" %}" alt = "Picture of Cover" />
-		</div>
-	</body>
-	
-</html>
+{% block body_block %}
+	<div class="page_content">
+		<h2>Story</h2>
+		<p>You are an Adventurer</p> <br />
+		<img src="{% static "einekleine.jpg" %}" alt = "Picture of Cover" />
+	</div>
+{% endblock %}

@@ -1,4 +1,45 @@
-<!DOCTYPE html>
+{% extends 'real_fantasy_adventure_app/base.html/' %}
+
+{% load static %}
+
+{% block title %}Index{% endblock %}
+
+{% block body_block %}
+    {% if academics %}
+    <h2>Top 5 Academics</h2>
+        <ul>
+            {% for academic in academics %}
+            <li><a href="/real_fantasy_adventure_app/avatar/{{ academic.slug }}">{{ academic.nickname }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <strong>There are no academics present.</strong>
+    {% endif %}
+
+    {% if professionals %}
+    <h2>Top 5 Professionals</h2>
+        <ul>
+            {% for professional in professionals %}
+            <li><a href="/real_fantasy_adventure_app/avatar/{{ professional.slug }}">{{ professional.nickname }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <strong>There are no professionals present.</strong>
+    {% endif %}
+
+    {% if athletes %}
+    <h2>Top 5 Atletes</h2>
+        <ul>
+            {% for athlete in athletes %}
+            <li><a href="/real_fantasy_adventure_app/avatar/{{ athlete.slug }}">{{ athlete.nickname }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <strong>There are no athletes present.</strong>
+    {% endif %}
+{% endblock %}
+
+<!-- <!DOCTYPE html>
 
 {% load static %}
 
@@ -61,4 +102,4 @@
 
         <a href="/real_fantasy_adventure_app/about/">About</a> <br />
     </body>
-</html>
+</html> -->
