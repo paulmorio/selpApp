@@ -2,56 +2,36 @@
 
 {% load static %}
 
-{% block title %}Avatar{% endblock %}
+{% block title %}{{ avatar_name }}'s Profile{% endblock %}
 
 {% block body_block %}
-    <h1>{{ avatar_name }}</h1>
-    {% if avatar %}
-        {% if myQuests %}
-        <ul>
-            {% for myQuest in myQuests %}
-            <li><a href="{{ myQuest.url }}">{{ myQuest.title }}</a></li>
-            {% endfor %}
-        </ul>
-        {% else %}
-            <strong>No myQuests currently in avatar.</strong>
-        {% endif %}
-    {% else %}
-        The specified avatar {{ avatar_name }} does not exist!
-    {% endif %}
-    <a href="/real_fantasy_adventure_app/avatar/{{ avatar_name }}/add_myQuest">Add MyQuest</a>
-{% endblock %}
-
-<!-- <!DOCTYPE html>
-
-{% load static %}
-
-<html>
-    <head>
-        <title>Real Fantasy Adventure</title>
-        <link rel="stylesheet" type="text/css" href="{% static 'css/real_fantasy_adventure_base.css' %}">
-        <link href='http://fonts.googleapis.com/css?family=Cinzel:400,700' rel='stylesheet' type='text/css'>
-    </head>
-
-    <body>
-        <div class="page-header">
-            <h1><a href="/real_fantasy_adventure_app/"> Real Fantasy Adventure </a></h1>
-        </div>
-
-        <h1>{{ avatar_name }}</h1>
+    <h2>{{ avatar_name }}</h2>
         {% if avatar %}
-            {% if myQuests %}
             <ul>
-                {% for myQuest in myQuests %}
-                <li><a href="{{ myQuest.url }}">{{ myQuest.title }}</a></li>
-                {% endfor %}
+                <li> Biography {{ avatar_bio }} </li>
+                <li> Level of Avatar: {{ avatar_level }} </li>
+                <li> Professional Points: {{ avatar_num_professional_points }} </li>
+                <li> Athletic Points: {{ avatar_num_athletic_points }} </li>
+                <li> Academic Points: {{ avatar_num_academic_points }} </li>
+                <li> Date Joined: {{ avatar_created_date }} </li>
             </ul>
-            {% else %}
-                <strong>No myQuests currently in avatar.</strong>
+
+            {% if is_users_avatar %}
+                {% if myQuests %}
+                <ul>
+                    {% for myQuest in myQuests %}
+                        <li><a href="{{ myQuest.url }}">{{ myQuest.title }}</a></li>
+                    {% endfor %}
+                    <a href="/real_fantasy_adventure_app/avatar/{{ avatar_name }}/add_myQuest">Add MyQuest</a>
+                </ul>
+                {% else %}
+                    <strong>No myQuests currently in avatar. Create one for yourself! Self Challenge and Discipline is important!</strong>
+                    <a href="/real_fantasy_adventure_app/avatar/{{ avatar_name }}/add_myQuest">Add MyQuest</a>
+                {% endif %}
             {% endif %}
+
         {% else %}
             The specified avatar {{ avatar_name }} does not exist!
         {% endif %}
-        <a href="/real_fantasy_adventure_app/avatar/{{ avatar_name }}/add_myQuest">Add MyQuest</a>
-    </body>
-</html> -->
+{% endblock %}
+

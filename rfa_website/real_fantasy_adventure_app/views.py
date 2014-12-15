@@ -34,11 +34,12 @@ def about(request):
 def notLoggedIn(request):
     return render(request, 'real_fantasy_adventure_app/notLoggedIn.html')
 
-@login_required(login_url='/real_fantasy_adventure_app/notLoggedIn/')
+# @login_required(login_url='/real_fantasy_adventure_app/notLoggedIn/')
 def avatarProfile(request, avatar_name_slug):
-
-    # Create a context dictionary which we can pass to the template rendering engine.
     context_dict = {}
+
+    # find out the identity of the visitor making the request
+    current_user = request.user
 
     try:
         # Can we find a avatar nickname slug with the given nickname?
@@ -46,26 +47,39 @@ def avatarProfile(request, avatar_name_slug):
         # So the .get() method returns one model instance or raises an exception.
         avatar = Avatar.objects.get(slug=avatar_name_slug) 
 
-        context_dict['avatar_name'] = avatar.nickname
+    except Avatar.DoesNotExist:
+        # the template displays the "no avatar" message
+        pass
 
+    context_dict['avatar'] = avatar
+    context_dict['avatar_name'] = avatar.nickname
+    context_dict['avatar_name_slug'] = avatar_name_slug
+    context_dict['avatar_bio'] = avatar.bio
+    context_dict['avatar_level'] = avatar.level
+    context_dict['avatar_num_professional_points'] = avatar.num_professional_points
+    context_dict['avatar_num_athletic_points'] = avatar.num_athletic_points
+    context_dict['avatar_num_academic_points'] = avatar.num_academic_points
+    context_dict['avatar_created_date'] = avatar.created_date
+
+    # if the avatar belongs to the current user we show him all of the attributes of his avatar,
+    # his/her myQuests and the myQuest button
+    if (avatar.user == current_user):
+        # set a variable that is will be used to between the cases
+        is_users_avatar = avatar.nickname
+        context_dict['is_users_avatar'] = is_users_avatar
         # Retrieve all of the associated myQuests.
         # Note that filter returns >= 1 model instance.
         myQuests = MyQuest.objects.filter(avatar=avatar)
-
         # Adds our results list to the template context under nickname myQuests.
         context_dict['myQuests'] = myQuests
-        # We also add the avatar object from the database to the context dictionary.
-        # We'll use this in the template to verify that the avatar exists.
-        context_dict['avatar'] = avatar
-        context_dict['avatar_name_slug'] = avatar_name_slug
 
-    except Avatar.DoesNotExist:
-        # We get here if we didn't find the specified avatar.
-        # Don't do anything - the template displays the "no avatar" message for us.
-        pass
+        return render(request, 'real_fantasy_adventure_app/avatarProfile.html', context_dict)
 
-    # Go render the response and return it to the client.
-    return render(request, 'real_fantasy_adventure_app/avatarProfile.html', context_dict)
+    # if the current user is looking at someone else's avatar they can simply look at their 
+    # avatar specs without the myQuests as they are private.
+    else:
+        # Go render the response and return it to the client.
+        return render(request, 'real_fantasy_adventure_app/avatarProfile.html', context_dict)
 
 def register(request):
     #boolean variable that controls whether registrations was successful or not
