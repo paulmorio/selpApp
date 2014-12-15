@@ -21,6 +21,13 @@ def index(request):
     # make a context dictionary for each
     context_dict = {'academics': avatars_by_academic, 'professionals': avatars_by_professional, 'athletes': avatars_by_athletic}
 
+    # do a quick check on the identity of the user so that we can decide whether they can
+    # access their avatar profile.
+    current_user = request.user
+    if (current_user.is_authenticated()):
+        avatar = Avatar.objects.get(user=current_user)
+        context_dict['avatar_name_slug'] = avatar.slug 
+
     # Return a rendered response to send to the client.
     # We make use of the shortcut function to make our lives easier.
     # Note that the first parameter is the template we wish to use.
@@ -34,7 +41,7 @@ def about(request):
 def notLoggedIn(request):
     return render(request, 'real_fantasy_adventure_app/notLoggedIn.html')
 
-# @login_required(login_url='/real_fantasy_adventure_app/notLoggedIn/')
+@login_required(login_url='/real_fantasy_adventure_app/notLoggedIn/')
 def avatarProfile(request, avatar_name_slug):
     context_dict = {}
 
@@ -80,6 +87,7 @@ def avatarProfile(request, avatar_name_slug):
     else:
         # Go render the response and return it to the client.
         return render(request, 'real_fantasy_adventure_app/avatarProfile.html', context_dict)
+
 
 def register(request):
     #boolean variable that controls whether registrations was successful or not
@@ -174,7 +182,12 @@ def add_myQuest(request, avatar_name_slug):
 
     return render(request, 'real_fantasy_adventure_app/add_myQuest.html', context_dict)
 
+# def log_information(request, avatar_name_slug)
+#     try:
+#         avatar = Avatar.objects.get(slug=avatar_name_slug)
+#     except:
+#         avatar = None
 
-
-
-
+#         if (request.method == 'POST'):
+#             form = LogInformationForm(request.POST)
+#             if form.is_valid():

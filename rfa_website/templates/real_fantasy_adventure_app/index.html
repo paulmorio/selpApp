@@ -37,6 +37,14 @@
     {% else %}
         <strong>There are no athletes present.</strong>
     {% endif %}
+
+    <hr />
+
+    {% if user.is_authenticated %}
+    <div><a href="/real_fantasy_adventure_app/avatar/{{ avatar_name_slug }}/"> Your Avatar Page </a></div>
+    {% else %}
+    <p> If you log-in, a link will appear here that links you straight to your avatar</p>
+    {% endif %}
 {% endblock %}
 
 <!-- <!DOCTYPE html>
