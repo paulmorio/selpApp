@@ -42,3 +42,14 @@ class MyQuestForm(forms.ModelForm):
 		model = MyQuest
 		fields = ('title', 'description', 'req_professional_points', 'req_athletic_points', 'req_academic_points')
 		exclude = ('avatar',)
+
+class StatChangeForm(forms.ModelForm):
+	"""docstring for StatChangeForm"""
+	num_professional_points = forms.IntegerField(initial=0, help_text="How many hours did you work professionally today")
+	num_athletic_points = forms.IntegerField(initial=0, help_text="How many hours did you spend exercising today?")
+	num_academic_points = forms.IntegerField(initial=0, help_text="How many hours did you spend studying today?")
+
+	class Meta:
+		model = Avatar
+		fields = ('num_professional_points','num_athletic_points', 'num_academic_points')
+		exclude = ('avatar',)

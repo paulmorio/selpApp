@@ -57,8 +57,8 @@ class Avatar(models.Model):
 	def __unicode__(self):
 		return self.user.username
 
-	def get_total_points():
-		return num_professional_points + num_academic_points + num_athletic_points
+	def get_total_points(self):
+		return self.num_professional_points + self.num_athletic_points + self.num_academic_points
 
 	class Meta:
 		verbose_name = "Avatar Entry"

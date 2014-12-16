@@ -8,11 +8,12 @@
     <h2>{{ avatar_name }}</h2>
         {% if avatar %}
             <ul>
-                <li> Biography {{ avatar_bio }} </li>
+                <li> Biography: {{ avatar_bio }} </li>
                 <li> Level of Avatar: {{ avatar_level }} </li>
                 <li> Professional Points: {{ avatar_num_professional_points }} </li>
                 <li> Athletic Points: {{ avatar_num_athletic_points }} </li>
                 <li> Academic Points: {{ avatar_num_academic_points }} </li>
+                <li> Total Number of Points: {{ avatar_total_points }}</li>
                 <li> Date Joined: {{ avatar_created_date }} </li>
             </ul>
 
@@ -23,10 +24,12 @@
                         <li><a href="{{ myQuest.url }}">{{ myQuest.title }}</a></li>
                     {% endfor %}
                     <a href="/real_fantasy_adventure_app/avatar/{{ avatar_name }}/add_myQuest">Add MyQuest</a>
+                    <a href="/real_fantasy_adventure_app/avatar/{{ avatar_name }}/statChange">Log in Hours</a>
                 </ul>
                 {% else %}
                     <strong>No myQuests currently in avatar. Create one for yourself! Self Challenge and Discipline is important!</strong>
                     <a href="/real_fantasy_adventure_app/avatar/{{ avatar_name }}/add_myQuest">Add MyQuest</a>
+                    <a href="/real_fantasy_adventure_app/avatar/{{ avatar_name }}/statChange">Log in Hours</a>
                 {% endif %}
             {% endif %}
 

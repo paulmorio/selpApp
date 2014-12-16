@@ -3,10 +3,11 @@ from django.shortcuts import render
 from django.views import generic
 from django.contrib.auth.models import User
 from real_fantasy_adventure_app.models import Quest, Avatar, MyQuest
-from real_fantasy_adventure_app.forms import AvatarForm, UserForm, MyQuestForm
+from real_fantasy_adventure_app.forms import AvatarForm, UserForm, MyQuestForm, StatChangeForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
+from real_fantasy_adventure_app.statChange import inc_professional_points, inc_athletic_points, inc_academic_points
 
 
 # Create your views here.
@@ -67,6 +68,7 @@ def avatarProfile(request, avatar_name_slug):
     context_dict['avatar_num_athletic_points'] = avatar.num_athletic_points
     context_dict['avatar_num_academic_points'] = avatar.num_academic_points
     context_dict['avatar_created_date'] = avatar.created_date
+    context_dict['avatar_total_points'] = avatar.get_total_points()
 
     # if the avatar belongs to the current user we show him all of the attributes of his avatar,
     # his/her myQuests and the myQuest button
@@ -169,11 +171,11 @@ def add_myQuest(request, avatar_name_slug):
         form = MyQuestForm(request.POST)
         if form.is_valid():
             if avatar:
-                    myQuest = form.save(commit=False)
-                    myQuest.avatar = avatar
-                    myQuest.save()
-                    # probably better to use a redirect here.
-                    return avatarProfile(request, avatar_name_slug)
+                myQuest = form.save(commit=False)
+                myQuest.avatar = avatar
+                myQuest.save()
+                # probably better to use a redirect here.
+                return avatarProfile(request, avatar_name_slug)
             else:
                 print form.errors
     else:
@@ -182,12 +184,26 @@ def add_myQuest(request, avatar_name_slug):
 
     return render(request, 'real_fantasy_adventure_app/add_myQuest.html', context_dict)
 
-# def log_information(request, avatar_name_slug)
-#     try:
-#         avatar = Avatar.objects.get(slug=avatar_name_slug)
-#     except:
-#         avatar = None
+def statChange(request, avatar_name_slug):
+    try:
+        avatar = Avatar.objects.get(slug=avatar_name_slug)
+    except:
+        avatar = None
 
-#         if (request.method == 'POST'):
-#             form = LogInformationForm(request.POST)
-#             if form.is_valid():
+    if (request.method == 'POST'):
+        form = StatChangeForm(request.POST)
+        if form.is_valid():
+            if avatar:
+                formValues = form.cleaned_data
+                inc_professional_points(avatar, formValues['num_professional_points'])
+                inc_athletic_points(avatar, formValues['num_athletic_points'])
+                inc_academic_points(avatar, formValues['num_academic_points'])
+                return avatarProfile(request, avatar_name_slug)
+            else:
+                print form.errors
+    else:
+        form = StatChangeForm()
+        context_dict = {'form': form, 'avatar': avatar, 'avatar_name_slug': avatar_name_slug}
+
+    return render(request, 'real_fantasy_adventure_app/statChange.html', context_dict)
+
