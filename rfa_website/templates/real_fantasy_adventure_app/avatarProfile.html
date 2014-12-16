@@ -21,15 +21,15 @@
                 {% if myQuests %}
                 <ul>
                     {% for myQuest in myQuests %}
-                        <li><a href="{{ myQuest.url }}">{{ myQuest.title }}</a></li>
+                    <li><a href="/real_fantasy_adventure_app/avatar/{{ avatar_name_slug }}/{{ myQuest.slug }}">{{ myQuest.title }}</a></li>
                     {% endfor %}
-                    <a href="/real_fantasy_adventure_app/avatar/{{ avatar_name }}/add_myQuest">Add MyQuest</a>
-                    <a href="/real_fantasy_adventure_app/avatar/{{ avatar_name }}/statChange">Log in Hours</a>
+                    <a href="/real_fantasy_adventure_app/avatar/{{ avatar_name_slug }}/add_myQuest">Add MyQuest</a>
+                    <a href="/real_fantasy_adventure_app/avatar/{{ avatar_name_slug }}/statChange">Log in Hours</a>
                 </ul>
                 {% else %}
                     <strong>No myQuests currently in avatar. Create one for yourself! Self Challenge and Discipline is important!</strong>
-                    <a href="/real_fantasy_adventure_app/avatar/{{ avatar_name }}/add_myQuest">Add MyQuest</a>
-                    <a href="/real_fantasy_adventure_app/avatar/{{ avatar_name }}/statChange">Log in Hours</a>
+                    <a href="/real_fantasy_adventure_app/avatar/{{ avatar_name_slug }}/add_myQuest">Add MyQuest</a>
+                    <a href="/real_fantasy_adventure_app/avatar/{{ avatar_name_slug }}/statChange">Log in Hours</a>
                 {% endif %}
             {% endif %}
 

@@ -155,11 +155,42 @@ def user_login(request):
         # the request method was not of type POST, thus we show the login forms
         return render(request, 'real_fantasy_adventure_app/login.html', {})
 
-@login_required(login_url='/real_fantasy_adventure_app/')
+@login_required(login_url='/real_fantasy_adventure_app/notLoggedIn/')
 def user_logout(request):
     # since the check if logged in is done beforehand we can just log the user out
     logout(request)
     return HttpResponseRedirect('/real_fantasy_adventure_app/')
+
+@login_required(login_url='/real_fantasy_adventure_app/notLoggedIn/')
+def myQuest(request, avatar_name_slug, myQuest_name_slug):
+    context_dict = {}
+    current_user = request.user
+    try:
+        avatar = Avatar.objects.get(slug=avatar_name_slug)
+    except Avatar.DoesNotExist:
+        avatar = None
+    try:
+        myQuest = MyQuest.objects.get(slug=myQuest_name_slug)
+    except MyQuest.DoesNotExist:
+        myQuest = None
+
+    if (current_user == avatar.user):
+        context_dict = {'myQuest':myQuest, 'myQuest_title':myQuest.title, 'myQuest_description':myQuest.description, 'myQuest_req_professional_points':myQuest.req_professional_points, 'myQuest_req_athletic_points':myQuest.req_athletic_points, 'myQuest_req_academic_points':myQuest.req_academic_points}
+        
+        # Check if users avatar has cleared some of the required number of points to clear
+        if (avatar.num_professional_points >= myQuest.req_professional_points):
+            context_dict['myQuest_req_professional_points'] = "Clear!"
+        if (avatar.num_athletic_points >= myQuest.req_athletic_points):
+            context_dict['myQuest_req_athletic_points'] = "Clear!"
+        if (avatar.num_academic_points >= myQuest.req_academic_points):
+            context_dict['myQuest_req_academic_points'] = "Clear!"
+
+        # if all three requirements are cleared the myQuest has been cleared
+        if (context_dict['myQuest_req_academic_points'] == "Clear!" and context_dict['myQuest_req_athletic_points'] == "Clear!" and context_dict['myQuest_req_professional_points'] == "Clear!"):
+            context_dict['myQuest_cleared'] = "Well Done!"
+        return render(request, 'real_fantasy_adventure_app/myQuest.html', context_dict)
+    else:
+        return HttpResponseRedirect('/real_fantasy_adventure_app/')
 
 def add_myQuest(request, avatar_name_slug):
     try:

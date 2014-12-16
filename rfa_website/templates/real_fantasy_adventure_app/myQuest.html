@@ -1,0 +1,27 @@
+{% extends 'real_fantasy_adventure_app/base.html/' %}
+
+{% load static %}
+
+{% block title %}{{ myQuest_title }}{% endblock %}
+
+{% block body_block %}
+    <h2>{{ myQuest_title }}</h2>
+        {% if myQuest %}
+            <ul>
+                <li> MyQuest Description: {{ myQuest_description }} </li>
+                <li> MyQuest Required Professional Points to Clear: {{ myQuest_req_professional_points }} </li>
+                <li> MyQuest Required Athletic Points to Clear: {{ myQuest_req_athletic_points }} </li>
+                <li> MyQuest Required Academic Points to Clear: {{ myQuest_req_academic_points }} </li>
+            </ul>
+            {% if myQuest_cleared %}
+                <h3>{{ myQuest_cleared }} You have cleared this quest! </h3>
+            {% else %}
+                <h3> Looks like there you have to improve avatar before you can clear this myQuest. You can do it! </h3>
+            {% endif %}
+        {% else %}
+            <p>We cant find your MyQuest we are sorry!</p>
+        {% endif %}
+
+    <a href="/real_fantasy_adventure_app/avatar/{{ myQuest.avatar.slug }}/"> Return to your Avatar Page </a> <br />
+
+{% endblock %}
