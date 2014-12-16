@@ -1,6 +1,7 @@
 {% extends 'real_fantasy_adventure_app/base.html/' %}
 
 {% load static %}
+{% load bootstrap %}
 
 {% block title %}Log-in{% endblock %}
 
@@ -19,8 +20,8 @@
         {% csrf_token %}
 
         <!-- Displays each form. The as_p method wraps each element in a (<p>) element. -->
-        {{ user_form.as_p }}
-        {{ avatar_form.as_p }}
+        {{ user_form | bootstrap }}
+        {{ avatar_form | bootstrap }}
 
         <!-- Provide a button to click to submit the form. -->
         <input type="submit" name="submit" value="Register" />
