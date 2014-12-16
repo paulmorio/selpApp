@@ -1,31 +1,31 @@
 h1 {
-	color: #000000;
+	color: #9C2A00;
 	font-family: 'Cinzel', serif;
 }
 
 h1 a {
-	color: #FFFFFF;
+	color: #9C2A00;
 	font-family: 'Cinzel', serif;
 }
 
 h2 {
-	color: #FFFFFF;
+	color: #9C2A00;
 	font-family: 'Cinzel', serif;
 }
 
 h3 {
-	color: #FFFFFF;
+	color: #9C2A00;
 	font-family: 'Cinzel', serif;
 }
 
 body {
-	background-color: #B1C392;
+	background-color: #FFFBD0;
 	padding-left: 10%;
 	padding-right: 10%;
 }
 
 .page-header {
-    background-color: #274245;
+    background-color: #DFBF86;
     margin-top: 0;
     background-image:url('/static/tacticsOgre.JPG');
     padding: 20px 20px 20px 40px;
@@ -33,7 +33,7 @@ body {
 
 .footer-list li {
 	display: inline;
-    background-color: #274245;
+    background-color: #DFBF86;
     color: #FFFFFF;
     font-family: 'Cinzel', serif;
     padding: 10px;
