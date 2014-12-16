@@ -1,17 +1,40 @@
+h1 {
+	color: #000000;
+	font-family: 'Cinzel', serif;
+}
+
 h1 a {
 	color: #FFFFFF;
 	font-family: 'Cinzel', serif;
 }
 
+h2 {
+	color: #FFFFFF;
+	font-family: 'Cinzel', serif;
+}
+
+h3 {
+	color: #FFFFFF;
+	font-family: 'Cinzel', serif;
+}
+
 body {
-	background-color: #CDCDC5;
+	background-color: #B1C392;
 	padding-left: 10%;
 	padding-right: 10%;
 }
 
 .page-header {
-    background-color: #3E3E3B;
+    background-color: #274245;
     margin-top: 0;
-    text-align: center;
+    background-image:url('/static/tacticsOgre.JPG');
     padding: 20px 20px 20px 40px;
+}
+
+.footer-list li {
+	display: inline;
+    background-color: #274245;
+    color: #FFFFFF;
+    font-family: 'Cinzel', serif;
+    padding: 10px;
 }
