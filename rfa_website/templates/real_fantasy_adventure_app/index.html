@@ -38,6 +38,8 @@
         <strong>There are no athletes present.</strong>
     {% endif %}
 
+    <a href="/real_fantasy_adventure_app/rankings/"> Full Rankings </a>
+
     <hr />
 
     {% if user.is_authenticated %}
@@ -46,68 +48,3 @@
     <p> If you log-in, a link will appear here that links you straight to your avatar</p>
     {% endif %}
 {% endblock %}
-
-<!-- <!DOCTYPE html>
-
-{% load static %}
-
-<html>
-    <head>
-        <title>Real Fantasy Adventure</title>
-        <link rel="stylesheet" type="text/css" href="{% static 'css/real_fantasy_adventure_base.css' %}">
-        <link href='http://fonts.googleapis.com/css?family=Cinzel:400,700' rel='stylesheet' type='text/css'>
-    </head>
-
-    <body>
-        <div class="page-header">
-            <h1><a href="/real_fantasy_adventure_app/"> Real Fantasy Adventure </a></h1>
-            {% if user.is_authenticated %}
-            <h1>Hello {{ user.username }}!</h1>
-            {% else %}
-            <h1>Hello Anonymous would you like to login?</h1>
-            {% endif %}
-        </div>
-
-        {% if academics %}
-        <h2>Top 5 Academics</h2>
-            <ul>
-                {% for academic in academics %}
-                <li><a href="/real_fantasy_adventure_app/avatar/{{ academic.slug }}">{{ academic.nickname }}</a></li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <strong>There are no academics present.</strong>
-        {% endif %}
-
-        {% if professionals %}
-        <h2>Top 5 Professionals</h2>
-            <ul>
-                {% for professional in professionals %}
-                <li><a href="/real_fantasy_adventure_app/avatar/{{ professional.slug }}">{{ professional.nickname }}</a></li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <strong>There are no professionals present.</strong>
-        {% endif %}
-
-        {% if athletes %}
-        <h2>Top 5 Atletes</h2>
-            <ul>
-                {% for athlete in athletes %}
-                <li><a href="/real_fantasy_adventure_app/avatar/{{ athlete.slug }}">{{ athlete.nickname }}</a></li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <strong>There are no athletes present.</strong>
-        {% endif %}
-
-        {% if user.is_authenticated %}
-            <a href="/real_fantasy_adventure_app/logout/">Logout</a><br />
-        {% else %}
-            <a href="/real_fantasy_adventure_app/register/">Register</a> <br />
-            <a href="/real_fantasy_adventure_app/login/">Log-In</a> <br />
-        {% endif %}
-
-        <a href="/real_fantasy_adventure_app/about/">About</a> <br />
-    </body>
-</html> -->

@@ -238,3 +238,13 @@ def statChange(request, avatar_name_slug):
 
     return render(request, 'real_fantasy_adventure_app/statChange.html', context_dict)
 
+
+def rankings(request):
+    avatars_by_academic = Avatar.objects.order_by('-num_academic_points')
+    avatars_by_professional = Avatar.objects.order_by('-num_professional_points')
+    avatars_by_athletic = Avatar.objects.order_by('-num_athletic_points')
+    
+    context_dict = {'professionals': avatars_by_professional, 'athletes': avatars_by_athletic, 'academics': avatars_by_academic}
+
+    return render(request, 'real_fantasy_adventure_app/rankings.html', context_dict)
+

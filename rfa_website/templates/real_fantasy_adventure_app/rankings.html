@@ -1,0 +1,42 @@
+{% extends 'real_fantasy_adventure_app/base.html/' %}
+
+{% load static %}
+
+{% block title %}Rankings{% endblock %}
+
+{% block body_block %}
+	{% if academics %}
+    <h2>Top Academics</h2>
+        <ul>
+            {% for academic in academics %}
+            <li><a href="/real_fantasy_adventure_app/avatar/{{ academic.slug }}">{{ academic.nickname }}</a><span> with {{ academic.num_academic_points }} points </span></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <strong>There are no academics present.</strong>
+    {% endif %}
+
+    {% if professionals %}
+    <h2>Top Professionals</h2>
+        <ul>
+            {% for professional in professionals %}
+            <li><a href="/real_fantasy_adventure_app/avatar/{{ professional.slug }}">{{ professional.nickname }}</a><span> with {{ professional.num_professional_points }} points </span></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <strong>There are no professionals present.</strong>
+    {% endif %}
+
+    {% if athletes %}
+    <h2>Top Atletes</h2>
+        <ul>
+            {% for athlete in athletes %}
+            <li><a href="/real_fantasy_adventure_app/avatar/{{ athlete.slug }}">{{ athlete.nickname }}</a><span> with {{ athlete.num_athletic_points }} points </span></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <strong>There are no athletes present.</strong>
+    {% endif %}
+
+
+{% endblock %}
