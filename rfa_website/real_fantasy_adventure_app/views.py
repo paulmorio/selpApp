@@ -15,7 +15,7 @@ from real_fantasy_adventure_app.statChange import inc_professional_points, inc_a
 def index(request):
     """
     View for the Index, a blank string after /real_fantasy_adventure_app/ in the URL redirects the user to this view,
-     and its corresponding template
+    and its corresponding template
     """
 
     # make a list of the top 5 players by points
@@ -40,9 +40,8 @@ def index(request):
 
 def about(request):
     """View for the about page"""
-	context_dict = {'boldthing' : "You are an adventurer"}
-
-	return render(request, 'real_fantasy_adventure_app/about.html', context_dict)
+    context_dict = {'boldthing' : "You are an adventurer"}
+    return render(request, 'real_fantasy_adventure_app/about.html', context_dict)
 
 def notLoggedIn(request):
     """View function that handles cases where the notLoggedIn page must be shown"""
