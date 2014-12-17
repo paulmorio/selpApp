@@ -5,38 +5,44 @@
 {% block title %}Index{% endblock %}
 
 {% block body_block %}
-    {% if academics %}
-    <h2>Top 5 Academics</h2>
-        <ul>
-            {% for academic in academics %}
-            <li><a href="/real_fantasy_adventure_app/avatar/{{ academic.slug }}">{{ academic.nickname }}</a></li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <strong>There are no academics present.</strong>
-    {% endif %}
-
-    {% if professionals %}
-    <h2>Top 5 Professionals</h2>
-        <ul>
-            {% for professional in professionals %}
-            <li><a href="/real_fantasy_adventure_app/avatar/{{ professional.slug }}">{{ professional.nickname }}</a></li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <strong>There are no professionals present.</strong>
-    {% endif %}
-
-    {% if athletes %}
-    <h2>Top 5 Athletes</h2>
-        <ul>
-            {% for athlete in athletes %}
-            <li><a href="/real_fantasy_adventure_app/avatar/{{ athlete.slug }}">{{ athlete.nickname }}</a></li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <strong>There are no athletes present.</strong>
-    {% endif %}
+    <div class="row">
+        <div class="one-third column">
+            {% if academics %}
+            <h3>Top 5 Academics</h3>
+                <ul>
+                    {% for academic in academics %}
+                    <li><a href="/real_fantasy_adventure_app/avatar/{{ academic.slug }}">{{ academic.nickname }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <strong>There are no academics present.</strong>
+            {% endif %}
+        </div>
+        <div class="one-third column">
+            {% if professionals %}
+            <h3>Top 5 Professionals</h3>
+                <ul>
+                    {% for professional in professionals %}
+                    <li><a href="/real_fantasy_adventure_app/avatar/{{ professional.slug }}">{{ professional.nickname }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <strong>There are no professionals present.</strong>
+            {% endif %}
+        </div>
+        <div class="one-third column">
+            {% if athletes %}
+            <h3>Top 5 Athletes</h3>
+                <ul>
+                    {% for athlete in athletes %}
+                    <li><a href="/real_fantasy_adventure_app/avatar/{{ athlete.slug }}">{{ athlete.nickname }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <strong>There are no athletes present.</strong>
+            {% endif %}
+        </div>
+    </div>
 
     <a href="/real_fantasy_adventure_app/rankings/"> Full Rankings </a>
 

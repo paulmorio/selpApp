@@ -5,42 +5,48 @@
 <html>
     <head>
         <title>RFA - {% block title %}Real Fantasy Adventure{% endblock %}</title>
-		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/skeleton.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/normalize.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'css/real_fantasy_adventure_base.css' %}">
         <link href='http://fonts.googleapis.com/css?family=Cinzel:400,700' rel='stylesheet' type='text/css'>
     </head>
 
     <body>
-        <div class="page-header">
-            <h1><a href="/real_fantasy_adventure_app/"> Real Fantasy Adventure </a></h1>
-            {% if user.is_authenticated %}
-            <h3>Hello {{ user.username }}!</h3>
-            {% else %}
-            <h3>Hello adventurer you are not logged in!</h3>
-            {% endif %}
-        </div>
+        <div class="container">
+            <div class="page-header">
+                <h1><a href="/real_fantasy_adventure_app/"> Real Fantasy Adventure </a></h1>
+                {% if user.is_authenticated %}
+                <h3>Hello {{ user.username }}!</h3>
+                {% else %}
+                <h4>Hello adventurer you are not logged in!</h4>
+                {% endif %}
+            </div>
 
-        <div>
-            {% block body_block %}{% endblock %}
-        </div>
+            <div>
+                {% block body_block %}{% endblock %}
+            </div>
 
-        <hr />
+            <hr />
 
-        <div class="page-footer">
-            <ul class="footer-list">
-            {% if user.is_authenticated %}
-                <li><a href="/real_fantasy_adventure_app/logout/">Logout</a>
-            {% else %}
-	            <li><a href="/real_fantasy_adventure_app/register/">Register</a></li>
-	            <li><a href="/real_fantasy_adventure_app/login/">Log-In</a></li>
-            {% endif %}
+            <div class="page-footer">
+                <ul class="footer-list">
+                {% if user.is_authenticated %}
+                    <li><a href="/real_fantasy_adventure_app/logout/">Logout</a>
+                {% else %}
+    	            <li><a href="/real_fantasy_adventure_app/register/">Register</a></li>
+    	            <li><a href="/real_fantasy_adventure_app/login/">Log-In</a></li>
+                {% endif %}
 
-                <li><a href="/real_fantasy_adventure_app/about/">About</a></li>
-            </ul>
-            <br />
-            <p> UG3 SELP Project 2014-2015 by Paul Scherer, The University of Edinburgh </p>
+                    <li><a href="/real_fantasy_adventure_app/about/">About</a></li>
+                </ul>
+                <br />
+                <p> UG3 SELP Project 2014-2015 by Paul Scherer, The University of Edinburgh </p>
+            </div>
         </div>
     </body>
 </html>
+
+
+<!--         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->

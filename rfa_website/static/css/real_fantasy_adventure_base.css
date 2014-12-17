@@ -1,4 +1,4 @@
-h1 {
+/*h1 {
 	color: #9C2A00;
 	font-family: 'Cinzel', serif;
 }
@@ -18,13 +18,17 @@ h3 {
 	font-family: 'Cinzel', serif;
 }
 
+h4 {
+	color: #9C2A00;
+	font-family: 'Cinzel', serif;
+}
+*/
 body {
 	background-color: #FFFBD0;
-	padding-left: 10%;
-	padding-right: 10%;
 }
 
 .page-header {
+	text-align: left;
     background-color: #DFBF86;
     margin-top: 0;
     background-image:url('/static/tacticsOgre.JPG');
@@ -35,6 +39,5 @@ body {
 	display: inline;
     background-color: #DFBF86;
     color: #FFFFFF;
-    font-family: 'Cinzel', serif;
     padding: 10px;
 }
