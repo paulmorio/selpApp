@@ -170,6 +170,45 @@ class IndexViewTests(TestCase):
 		self.assertContains(response, "There are no athletes present.")
 		self.assertQuerysetEqual(response.context['athletes'], [])
 
+	def test_index_view_with_academics(self):
+		"""If avatars exist, the appopiate content is displayed."""
+		testUser = User.objects.create_user(username = "testUser", email="test@test.com", password="test1234")
+		testAvatar = Avatar(user=testUser, nickname="TestName", bio="Test Biography", confirm=True)
+		testAvatar.save()
+
+		response = self.client.get(reverse('index'))
+		self.assertEqual(response.status_code,200)
+		self.assertNotContains(response, "There are no academics present.")
+
+		num_avatars = len(response.context['academics'])
+		self.assertEqual(num_avatars, 1)
+
+	def test_index_view_with_professsionals(self):
+		"""If avatars exist, the appropiate content is displayed"""
+		testUser = User.objects.create_user(username = "testUser", email="test@test.com", password="test1234")
+		testAvatar = Avatar(user=testUser, nickname="TestName", bio="Test Biography", confirm=True)
+		testAvatar.save()
+
+		response = self.client.get(reverse('index'))
+		self.assertEqual(response.status_code,200)
+		self.assertNotContains(response, "There are no professionals present.")
+
+		num_avatars = len(response.context['professionals'])
+		self.assertEqual(num_avatars, 1)
+
+	def test_index_view_with_athletes(self):
+		"""If avatars exist, the appropiate content is displayed"""
+		testUser = User.objects.create_user(username = "testUser", email="test@test.com", password="test1234")
+		testAvatar = Avatar(user=testUser, nickname="TestName", bio="Test Biography", confirm=True)
+		testAvatar.save()
+
+		response = self.client.get(reverse('index'))
+		self.assertEqual(response.status_code,200)
+		self.assertNotContains(response, "There are no athletes present.")
+
+		num_avatars = len(response.context['athletes'])
+		self.assertEqual(num_avatars, 1)
+
 	def test_index_view_without_authentication_own_avatar_link(self):
 		"""
 		If the user is not logged in, then there should be no link 
@@ -204,8 +243,8 @@ class IndexViewTests(TestCase):
 		self.assertEqual(response.status_code,200)
 		self.assertContains(response, "Hello adventurer you are not logged in!")
 
-	def test_index_view_authenticated_appropiate_header(self):
-		"""Checks if the your avatar link is availableif logged in user present"""
+	def test_index_view_authenticated_youravatar_link(self):
+		"""Checks if the your avatar link is available if logged in user present"""
 		# create a user
 		testUser = User.objects.create_user(username = "testUser", email="test@test.com", password="test1234")
 		testAvatar = Avatar(user=testUser, nickname="TestName", bio="Test Biography", confirm=True)
@@ -219,7 +258,7 @@ class IndexViewTests(TestCase):
 		self.assertContains(response, "Your Avatar Page")
 
 	def test_index_view_authenticated_logout(self):
-		"""Checks if the your logout link is availableif logged in user present"""
+		"""Checks if the logout link is available if logged in user present"""
 		# create a user
 		testUser = User.objects.create_user(username = "testUser", email="test@test.com", password="test1234")
 		testAvatar = Avatar(user=testUser, nickname="TestName", bio="Test Biography", confirm=True)
@@ -232,4 +271,107 @@ class IndexViewTests(TestCase):
 		self.assertEqual(response.status_code,200)
 		self.assertContains(response, "Logout")
 
+	def test_index_view_authenticated_appropiate_header(self):
+		"""Checks if the appropiate header is available if logged in"""
+		# create a user
+		testUser = User.objects.create_user(username = "testUser", email="test@test.com", password="test1234")
+		testAvatar = Avatar(user=testUser, nickname="TestName", bio="Test Biography", confirm=True)
+		testAvatar.save()
+
+		# log in this user
+		self.client.login(username="testUser", password="test1234")
+
+		response = self.client.get(reverse('index'))
+		self.assertEqual(response.status_code,200)
+		self.assertNotContains(response, "Hello adventurer you are not logged in!")
+
+class RankingsViewTests(TestCase):
+	"""
+	Class contains tests for the Rankings view, the docstrings of each test function 
+	explain what is tested
+	"""
+
+	def test_rankings_view_with_no_academics(self):
+		"""If no avatars exist, the appopiate message is displayed."""
+		response = self.client.get(reverse('rankings'))
+		self.assertEqual(response.status_code,200)
+		self.assertContains(response, "There are no academics present.")
+		self.assertQuerysetEqual(response.context['academics'], [])
+
+	def test_rankings_view_with_no_professsionals(self):
+		"""If no avatars exist, the appropiate message is displayed"""
+		response = self.client.get(reverse('rankings'))
+		self.assertEqual(response.status_code,200)
+		self.assertContains(response, "There are no professionals present.")
+		self.assertQuerysetEqual(response.context['professionals'], [])
+
+	def test_rankings_view_with_no_athletes(self):
+		"""If no avatars exist, the appropiate message is displayed"""
+		response = self.client.get(reverse('rankings'))
+		self.assertEqual(response.status_code,200)
+		self.assertContains(response, "There are no athletes present.")
+		self.assertQuerysetEqual(response.context['athletes'], [])
+
+	def test_rankings_view_with_academics(self):
+		"""If avatars exist, the appopiate content is displayed."""
+		testUser = User.objects.create_user(username = "testUser", email="test@test.com", password="test1234")
+		testAvatar = Avatar(user=testUser, nickname="TestName", bio="Test Biography", confirm=True)
+		testAvatar.save()
+
+		response = self.client.get(reverse('rankings'))
+		self.assertEqual(response.status_code,200)
+		self.assertNotContains(response, "There are no academics present.")
+
+		num_avatars = len(response.context['academics'])
+		self.assertEqual(num_avatars, 1)
+
+	def test_rankings_view_with_professsionals(self):
+		"""If avatars exist, the appropiate content is displayed"""
+		testUser = User.objects.create_user(username = "testUser", email="test@test.com", password="test1234")
+		testAvatar = Avatar(user=testUser, nickname="TestName", bio="Test Biography", confirm=True)
+		testAvatar.save()
+
+		response = self.client.get(reverse('rankings'))
+		self.assertEqual(response.status_code,200)
+		self.assertNotContains(response, "There are no professionals present.")
+
+		num_avatars = len(response.context['professionals'])
+		self.assertEqual(num_avatars, 1)
+
+	def test_rankings_view_with_athletes(self):
+		"""If avatars exist, the appropiate content is displayed"""
+		testUser = User.objects.create_user(username = "testUser", email="test@test.com", password="test1234")
+		testAvatar = Avatar(user=testUser, nickname="TestName", bio="Test Biography", confirm=True)
+		testAvatar.save()
+
+		response = self.client.get(reverse('rankings'))
+		self.assertEqual(response.status_code,200)
+		self.assertNotContains(response, "There are no athletes present.")
+
+		num_avatars = len(response.context['athletes'])
+		self.assertEqual(num_avatars, 1)
+
+	def test_rankings_view_without_authentication_register_link(self):
+		"""If the user is not logged in, there should be a register link"""
+		response = self.client.get(reverse('rankings'))
+		self.assertEqual(response.status_code,200)
+		self.assertContains(response, "Register")
+
+	def test_rankings_view_without_authentication_about_link(self):
+		"""If the user is not logged in, there should be a about link"""
+		response = self.client.get(reverse('rankings'))
+		self.assertEqual(response.status_code,200)
+		self.assertContains(response, "About")
+
+	def test_rankings_view_without_authentication_log_in_link(self):
+		"""If the user is not logged in, there should be a log-in link"""
+		response = self.client.get(reverse('rankings'))
+		self.assertEqual(response.status_code,200)
+		self.assertContains(response, "Log-In")
+
+	def test_rankings_view_without_authentication_appropiate_header(self):
+		"""If the user is not logged in, there should be a appropiate message in the header"""
+		response = self.client.get(reverse('rankings'))
+		self.assertEqual(response.status_code,200)
+		self.assertContains(response, "Hello adventurer you are not logged in!")
 
