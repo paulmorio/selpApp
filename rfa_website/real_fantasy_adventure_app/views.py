@@ -13,6 +13,10 @@ from real_fantasy_adventure_app.statChange import inc_professional_points, inc_a
 # Create your views here.
 
 def index(request):
+    """
+    View for the Index, a blank string after /real_fantasy_adventure_app/ in the URL redirects the user to this view,
+     and its corresponding template
+    """
 
     # make a list of the top 5 players by points
     avatars_by_academic = Avatar.objects.order_by('-num_academic_points')[:5]
@@ -35,15 +39,29 @@ def index(request):
     return render(request, 'real_fantasy_adventure_app/index.html', context_dict)
 
 def about(request):
+    """View for the about page"""
 	context_dict = {'boldthing' : "You are an adventurer"}
 
 	return render(request, 'real_fantasy_adventure_app/about.html', context_dict)
 
 def notLoggedIn(request):
+    """View function that handles cases where the notLoggedIn page must be shown"""
     return render(request, 'real_fantasy_adventure_app/notLoggedIn.html')
 
 @login_required(login_url='/real_fantasy_adventure_app/notLoggedIn/')
 def avatarProfile(request, avatar_name_slug):
+    """
+    This view handles the displaying of avatar profile pages and the available items depending on which 
+    what kind of visitor attempts to view the avatar page
+
+    There are 3 important cases
+    1. The visitor is not logged in, thus he/she is redirected to the notLoggedIn page
+    2. The visitor is logged in, but the avatar page visited is not his/her own avatar. In this
+        case, hours cannot be logged, and myQuests cannot be viewed.
+    3. The visitor is logged in and the avatar profile requested is the same as the users
+        avatar. Thus the is_users_avatar variable is added to the context dictionary,
+        so that everything is viewable
+    """
     context_dict = {}
 
     # find out the identity of the visitor making the request
@@ -92,6 +110,10 @@ def avatarProfile(request, avatar_name_slug):
 
 
 def register(request):
+    """
+    View handles the registration form, and communicates with the database to save
+    the relevant model created by using UserForm and AvatarForm from the forms module
+    """
     #boolean variable that controls whether registrations was successful or not
     registered = False
 
@@ -129,6 +151,11 @@ def register(request):
     return render(request, 'real_fantasy_adventure_app/register.html', {'user_form': user_form, 'avatar_form': avatar_form, 'registered': registered})
 
 def user_login(request):
+    """
+    This view handles the logging in of authenticated models, and checks for correctness 
+    of credentials provided. The password hasher currently used is the standard one by 
+    django (as of 1.7).
+    """
 
     if (request.method == 'POST'):
         username = request.POST['username']
@@ -157,12 +184,23 @@ def user_login(request):
 
 @login_required(login_url='/real_fantasy_adventure_app/notLoggedIn/')
 def user_logout(request):
+    """View logs out the user if he/she is logged in"""
     # since the check if logged in is done beforehand we can just log the user out
     logout(request)
     return HttpResponseRedirect('/real_fantasy_adventure_app/')
 
 @login_required(login_url='/real_fantasy_adventure_app/notLoggedIn/')
 def myQuest(request, avatar_name_slug, myQuest_name_slug):
+    """
+    View handles requests to view myQuests of avatars. As the viewing of myQuests should 
+    only be done by the avatar that owns the MyQuests both the avatar slug and the
+    myquest slug are required to view the MyQuest and thus comprise the second and third
+    parameter this function respectively.
+
+    If the avatar's number of points in each of the categories exceeds the 
+    req_<category>_points a congratulation is shown to the user, as well 
+    as an additional congratulations if the avatar has exceeded in all categories
+    """
     context_dict = {}
     current_user = request.user
     try:
@@ -192,7 +230,14 @@ def myQuest(request, avatar_name_slug, myQuest_name_slug):
     else:
         return HttpResponseRedirect('/real_fantasy_adventure_app/')
 
+@login_required(login_url='/real_fantasy_adventure_app/notLoggedIn/')
 def add_myQuest(request, avatar_name_slug):
+    """
+    View handles the creation of myQuests by authenticated, active, and present avatars.
+    Makes sure that myQuests can only be added if form is valied and saves it as part of
+    the myquests connected to the avatar in question. Single field validation on site
+    is performed in the template using bootstrap-django-forms
+    """
     try:
         avatar = Avatar.objects.get(slug=avatar_name_slug)
     except Avatar.DoesNotExist:
@@ -216,6 +261,11 @@ def add_myQuest(request, avatar_name_slug):
     return render(request, 'real_fantasy_adventure_app/add_myQuest.html', context_dict)
 
 def statChange(request, avatar_name_slug):
+    """
+    This view handles the logging in of hours made by users to their avatar, using functions
+    from the statChange module. Checks if inputted number of hours is below 24 hours by
+    redirecting to a punishment page for trying to cheat or put in invalid data
+    """
     try:
         avatar = Avatar.objects.get(slug=avatar_name_slug)
     except:
@@ -226,6 +276,7 @@ def statChange(request, avatar_name_slug):
         if form.is_valid():
             if avatar:
                 formValues = form.cleaned_data
+                # we can do the check here for 24 hours actually.
                 inc_professional_points(avatar, formValues['num_professional_points'])
                 inc_athletic_points(avatar, formValues['num_athletic_points'])
                 inc_academic_points(avatar, formValues['num_academic_points'])
@@ -240,6 +291,7 @@ def statChange(request, avatar_name_slug):
 
 
 def rankings(request):
+    """View collects the data needed from the database to present the rankings of users based on each of the categories"""
     avatars_by_academic = Avatar.objects.order_by('-num_academic_points')
     avatars_by_professional = Avatar.objects.order_by('-num_professional_points')
     avatars_by_athletic = Avatar.objects.order_by('-num_athletic_points')
