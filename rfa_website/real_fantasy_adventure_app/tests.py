@@ -375,3 +375,121 @@ class RankingsViewTests(TestCase):
 		self.assertEqual(response.status_code,200)
 		self.assertContains(response, "Hello adventurer you are not logged in!")
 
+	def test_rankings_view_authenticated_appropiate_header(self):
+		"""Checks if the appropiate header is available if logged in"""
+		# create a user
+		testUser = User.objects.create_user(username = "testUser", email="test@test.com", password="test1234")
+		testAvatar = Avatar(user=testUser, nickname="TestName", bio="Test Biography", confirm=True)
+		testAvatar.save()
+
+		# log in this user
+		self.client.login(username="testUser", password="test1234")
+
+		response = self.client.get(reverse('rankings'))
+		self.assertEqual(response.status_code,200)
+		self.assertNotContains(response, "Hello adventurer you are not logged in!")
+
+class AboutViewTests(TestCase):
+	"""
+	Class contains tests for the about view, the docstrings of each test function 
+	explain what is tested
+	"""
+
+	def test_about_view_without_authentication_register_link(self):
+		"""If the user is not logged in, there should be a register link"""
+		response = self.client.get(reverse('about'))
+		self.assertEqual(response.status_code,200)
+		self.assertContains(response, "Register")
+
+	def test_about_view_without_authentication_about_link(self):
+		"""If the user is not logged in, there should be a about link"""
+		response = self.client.get(reverse('about'))
+		self.assertEqual(response.status_code,200)
+		self.assertContains(response, "About")
+
+	def test_about_view_without_authentication_log_in_link(self):
+		"""If the user is not logged in, there should be a log-in link"""
+		response = self.client.get(reverse('about'))
+		self.assertEqual(response.status_code,200)
+		self.assertContains(response, "Log-In")
+
+	def test_about_view_without_authentication_appropiate_header(self):
+		"""If the user is not logged in, there should be a appropiate message in the header"""
+		response = self.client.get(reverse('about'))
+		self.assertEqual(response.status_code,200)
+		self.assertContains(response, "Hello adventurer you are not logged in!")
+
+	def test_about_view_authenticated_appropiate_header(self):
+		"""Checks if the appropiate header is available if logged in"""
+		# create a user
+		testUser = User.objects.create_user(username = "testUser", email="test@test.com", password="test1234")
+		testAvatar = Avatar(user=testUser, nickname="TestName", bio="Test Biography", confirm=True)
+		testAvatar.save()
+
+		# log in this user
+		self.client.login(username="testUser", password="test1234")
+
+		response = self.client.get(reverse('about'))
+		self.assertEqual(response.status_code,200)
+		self.assertNotContains(response, "Hello adventurer you are not logged in!")
+
+class LoginViewTests(TestCase):
+	"""
+	Class contains tests for the Login view, the docstrings of each test function 
+	explain what is tested
+	"""
+
+	def test_login_view_without_authentication_register_link(self):
+		"""If the user is not logged in, there should be a register link"""
+		response = self.client.get(reverse('login'))
+		self.assertEqual(response.status_code,200)
+		self.assertContains(response, "Register")
+
+	def test_login_view_without_authentication_about_link(self):
+		"""If the user is not logged in, there should be a about link"""
+		response = self.client.get(reverse('login'))
+		self.assertEqual(response.status_code,200)
+		self.assertContains(response, "About")
+
+	def test_login_view_without_authentication_log_in_link(self):
+		"""If the user is not logged in, there should be a log-in link"""
+		response = self.client.get(reverse('login'))
+		self.assertEqual(response.status_code,200)
+		self.assertContains(response, "Log-In")
+
+	def test_login_view_without_authentication_appropiate_header(self):
+		"""If the user is not logged in, there should be a appropiate message in the header"""
+		response = self.client.get(reverse('login'))
+		self.assertEqual(response.status_code,200)
+		self.assertContains(response, "Hello adventurer you are not logged in!")
+
+	def test_login_page_form_invalid_credentials_only_username(self):
+		"""If invalid credentials are given, there is appropiate message"""
+		response = self.client.post(reverse('login'), {'username':'test', 'password':''})
+		self.assertEqual(response.status_code,200)
+		self.assertContains(response, "Invalid login credentials")
+
+	def test_login_page_form_invalid_credentials_only_password(self):
+		"""If invalid credentials are given, there is appropiate message"""
+		response = self.client.post(reverse('login'), {'username':'', 'password':'test'})
+		self.assertEqual(response.status_code,200)
+		self.assertContains(response, "Invalid login credentials")
+
+	def test_login_page_form_invalid_credentials(self):
+		"""If invalid credentials are given, there is appropiate message"""
+		response = self.client.post(reverse('login'), {'username':'test', 'password':'test'})
+		self.assertEqual(response.status_code,200)
+		self.assertContains(response, "Invalid login credentials")
+
+	def test_login_page_form_valid_credentials(self):
+		"""Redirect to index if valid credentials are entered into the form"""
+		testUser = User.objects.create_user(username = "testUser", email="test@test.com", password="test1234")
+		testAvatar = Avatar(user=testUser, nickname="TestName", bio="Test Biography", confirm=True)
+		testAvatar.save()
+
+		response = self.client.post(reverse('login'), {'username':'testUser', 'password':'test1234'})
+		self.assertEqual(response.status_code,302)
+
+
+
+
