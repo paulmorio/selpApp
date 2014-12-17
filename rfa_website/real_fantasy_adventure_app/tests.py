@@ -61,6 +61,10 @@ class AvatarEntryTest(TestCase):
 
 # TestCases for MyQuest Models
 class MyQuestEntryTest(TestCase):
+	"""
+	Tests Section of the MyQuest model, each test function's docstring explains 
+	what is tested better
+	"""
 	
 	def test_create_unpublished(self):
 		"""
@@ -116,4 +120,41 @@ class MyQuestEntryTest(TestCase):
 		self.assertEqual(MyQuest.objects.filter(avatar=testAvatar2).count(), 2)
 		self.assertEqual(MyQuest.objects.filter(avatar=testAvatar1).count(), 1)
 		self.assertEqual(MyQuest.objects.filter(avatar=testAvatar3).count(), 0)
+
+class IndexViewTests(TestCase):
+	"""
+	Class contains tests for the index view, the docstrings of each test function 
+	explain what is tested
+	"""
+
+	def test_index_view_with_no_academics(self):
+		"""If no avatars exist, the appopiate message is displayed."""
+		response = self.client.get(reverse('index'))
+		self.assertEqual(response.status_code,200)
+		self.assertContains(response, "There are no academics present.")
+		self.assertQuerysetEqual(response.context['academics'], [])
+
+	def test_index_view_with_no_professsionals(self):
+		"""If no avatars exist, the appropiate message is displayed"""
+		response = self.client.get(reverse('index'))
+		self.assertEqual(response.status_code,200)
+		self.assertContains(response, "There are no professionals present.")
+		self.assertQuerysetEqual(response.context['professionals'], [])
+
+	def test_index_view_with_no_athletes(self):
+		"""If no avatars exist, the appropiate message is displayed"""
+		response = self.client.get(reverse('index'))
+		self.assertEqual(response.status_code,200)
+		self.assertContains(response, "There are no athletes present.")
+		self.assertQuerysetEqual(response.context['athletes'], [])
+
+	def test_index_view_without_authentication(self):
+		"""
+		If the user is not logged in, then there should be no link 
+		that goes to the avatar profile but a <p> item that tells
+		the visitor that a link will appear once he/she logs in.
+		"""
+		response = self.client.get(reverse('index'))
+		self.assertEqual(response.status_code,200)
+		self.assertContains(response, "If you log-in, a link will appear here that links you straight to your avatar")
 
