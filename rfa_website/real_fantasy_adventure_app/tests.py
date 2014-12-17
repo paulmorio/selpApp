@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import TestCase, Client
 from django.contrib.auth import get_user_model
 from . models import Quest, Avatar, MyQuest
 from django.contrib.auth.models import User
@@ -121,6 +121,28 @@ class MyQuestEntryTest(TestCase):
 		self.assertEqual(MyQuest.objects.filter(avatar=testAvatar1).count(), 1)
 		self.assertEqual(MyQuest.objects.filter(avatar=testAvatar3).count(), 0)
 
+class UserEntryTests(TestCase):
+	"""
+	Tests concerning users, as this module part of the django package, only minimal testing of
+	functions of interest are tested once again.
+	"""
+
+	def test_set_up_users_a_and_b(self):
+		a = User.objects.create_user(username="a", email="test@test.com", password="test1234")
+		b = User.objects.create_user(username="b", email="test@test.com", password="test1234")
+		c = User.objects.get(username="a")
+		d = User.objects.get(username="b")
+		self.assertEqual(a,c)
+		self.assertEqual(b,d)
+		self.assertNotEqual(a,d)
+
+	def test_check_usernames(self):
+		a = User.objects.create(username="a")
+		b = User.objects.create(username="b")
+		self.assertEqual(a.username, "a")
+		self.assertEqual(b.username, "b")
+		
+
 class IndexViewTests(TestCase):
 	"""
 	Class contains tests for the index view, the docstrings of each test function 
@@ -148,7 +170,7 @@ class IndexViewTests(TestCase):
 		self.assertContains(response, "There are no athletes present.")
 		self.assertQuerysetEqual(response.context['athletes'], [])
 
-	def test_index_view_without_authentication(self):
+	def test_index_view_without_authentication_own_avatar_link(self):
 		"""
 		If the user is not logged in, then there should be no link 
 		that goes to the avatar profile but a <p> item that tells
@@ -157,4 +179,57 @@ class IndexViewTests(TestCase):
 		response = self.client.get(reverse('index'))
 		self.assertEqual(response.status_code,200)
 		self.assertContains(response, "If you log-in, a link will appear here that links you straight to your avatar")
+
+	def test_index_view_without_authentication_register_link(self):
+		"""If the user is not logged in, there should be a register link"""
+		response = self.client.get(reverse('index'))
+		self.assertEqual(response.status_code,200)
+		self.assertContains(response, "Register")
+
+	def test_index_view_without_authentication_about_link(self):
+		"""If the user is not logged in, there should be a about link"""
+		response = self.client.get(reverse('index'))
+		self.assertEqual(response.status_code,200)
+		self.assertContains(response, "About")
+
+	def test_index_view_without_authentication_log_in_link(self):
+		"""If the user is not logged in, there should be a log-in link"""
+		response = self.client.get(reverse('index'))
+		self.assertEqual(response.status_code,200)
+		self.assertContains(response, "Log-In")
+
+	def test_index_view_without_authentication_appropiate_header(self):
+		"""If the user is not logged in, there should be a appropiate message in the header"""
+		response = self.client.get(reverse('index'))
+		self.assertEqual(response.status_code,200)
+		self.assertContains(response, "Hello adventurer you are not logged in!")
+
+	def test_index_view_authenticated_appropiate_header(self):
+		"""Checks if the your avatar link is availableif logged in user present"""
+		# create a user
+		testUser = User.objects.create_user(username = "testUser", email="test@test.com", password="test1234")
+		testAvatar = Avatar(user=testUser, nickname="TestName", bio="Test Biography", confirm=True)
+		testAvatar.save()
+
+		# log in this user
+		self.client.login(username="testUser", password="test1234")
+
+		response = self.client.get(reverse('index'))
+		self.assertEqual(response.status_code,200)
+		self.assertContains(response, "Your Avatar Page")
+
+	def test_index_view_authenticated_logout(self):
+		"""Checks if the your logout link is availableif logged in user present"""
+		# create a user
+		testUser = User.objects.create_user(username = "testUser", email="test@test.com", password="test1234")
+		testAvatar = Avatar(user=testUser, nickname="TestName", bio="Test Biography", confirm=True)
+		testAvatar.save()
+
+		# log in this user
+		self.client.login(username="testUser", password="test1234")
+
+		response = self.client.get(reverse('index'))
+		self.assertEqual(response.status_code,200)
+		self.assertContains(response, "Logout")
+
 
