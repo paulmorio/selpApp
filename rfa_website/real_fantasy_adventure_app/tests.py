@@ -80,3 +80,29 @@ class MyQuestEntryTest(TestCase):
 		myQuest.save()
 		self.assertEqual(myQuest.slug, 'random-string')
 
+	def test_belong_to_only_one_avatar(self):
+		"""
+		Asserts that myQuests only belong to one avatar.
+		"""
+		testUser1 = User.objects.create_user(username = "testUser1", email="test1@test.com", password="test1234")
+		testAvatar1 = Avatar(user=testUser1, nickname="TestName1", bio="Test1 Biography", confirm=True)
+		testAvatar1.save()
+		myQuest1 = MyQuest(avatar=testAvatar1, title="Random String1", description="Test Description", publish=False)
+		myQuest1.save()
+
+		testUser2 = User.objects.create_user(username = "testUser2", email="test2@test.com", password="test1234")
+		testAvatar2 = Avatar(user=testUser2, nickname="TestName2", bio="Test Biography", confirm=True)
+		testAvatar2.save()
+		myQuest2 = MyQuest(avatar=testAvatar2, title="Random String2", description="Test Description", publish=False)
+		myQuest2.save()
+
+		testUser3 = User.objects.create_user(username = "testUser3", email="test3@test.com", password="test1234")
+		testAvatar3 = Avatar(user=testUser3, nickname="TestName3", bio="Test Biography", confirm=True)
+		testAvatar3.save()
+		myQuest3 = MyQuest(avatar=testAvatar2, title="Random String3", description="Test Description", publish=False)
+		myQuest3.save()
+
+		self.assertEqual(MyQuest.objects.filter(avatar=testAvatar2).count(), 2)
+		self.assertEqual(MyQuest.objects.filter(avatar=testAvatar1).count(), 1)
+		self.assertEqual(MyQuest.objects.filter(avatar=testAvatar3).count(), 0)
+
