@@ -7,14 +7,16 @@ django.setup()
 from real_fantasy_adventure_app.models import Avatar, MyQuest
 from django.contrib.auth.models import User
 
+num_users_and_avatars_to_create = 100
+num_myquests_to_create_for_avatar = 3
 
 def populate():
     # set number of users in the for loop range
-    for number in range(1,101):
+    for number in range(1, num_users_and_avatars_to_create+1):
         test_user = add_user(("test_"+ str(number)))
         test_avatar = add_avatar(test_user, test_user.username)
         # 3 MyQuests are created for each avatar
-        for i in range(0,3):
+        for i in range(0, num_myquests_to_create_for_avatar+1):
             add_myQuest(test_avatar, i)
 
     # Print out what we have added 
