@@ -8,7 +8,7 @@ class QuestAdmin(MarkdownModelAdmin):
 
 class AvatarAdmin(MarkdownModelAdmin):
 	list_display = ("nickname", "created_date")
-	#prepopulated_fields = {"slug": ("nickname",)}
+	prepopulated_fields = {"slug": ("nickname",)}
 
 class MyQuestAdmin(MarkdownModelAdmin):
 	list_display = ("title", "created_date")
