@@ -1,4 +1,4 @@
-/*h1 {
+h1, h2, h3, h4, h5, h6{
 	color: #9C2A00;
 	font-family: 'Cinzel', serif;
 }
@@ -8,21 +8,6 @@ h1 a {
 	font-family: 'Cinzel', serif;
 }
 
-h2 {
-	color: #9C2A00;
-	font-family: 'Cinzel', serif;
-}
-
-h3 {
-	color: #9C2A00;
-	font-family: 'Cinzel', serif;
-}
-
-h4 {
-	color: #9C2A00;
-	font-family: 'Cinzel', serif;
-}
-*/
 body {
 	background-color: #FFFBD0;
 }
