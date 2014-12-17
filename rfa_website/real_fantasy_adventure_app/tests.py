@@ -3,6 +3,8 @@ from django.contrib.auth import get_user_model
 from . models import Quest, Avatar, MyQuest
 from django.contrib.auth.models import User
 from . statChange import inc_professional_points, inc_athletic_points, inc_academic_points
+from django.core.urlresolvers import reverse
+
 
 # TestCases for Quest Models
 class QuestEntryTest(TestCase):
@@ -47,6 +49,15 @@ class AvatarEntryTest(TestCase):
 		avatar = Avatar(user=testUser, nickname="Random String", bio="Test Biography", confirm=False)
 		avatar.save()
 		self.assertEqual(avatar.slug, 'random-string')
+
+	def test_get_total_points(self):
+		"""
+		Tests the get_total_points() function for correctness
+		"""
+		testUser = User.objects.create_user(username = "testUser", email="test@test.com", password="test1234")
+		avatar = Avatar(user=testUser, nickname="Random String", bio="Test Biography", confirm=False, num_professional_points=1, num_athletic_points=2, num_academic_points=3)
+		avatar.save()
+		self.assertEqual(avatar.get_total_points(), 6)	
 
 # TestCases for MyQuest Models
 class MyQuestEntryTest(TestCase):
