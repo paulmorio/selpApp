@@ -32,9 +32,9 @@ class MyQuestForm(forms.ModelForm):
 	title = forms.CharField(max_length=256, help_text="Give a title for your MyQuest")
 	description = forms.CharField(widget=forms.Textarea, help_text="Describe your MyQuest, its only visible by you so dont worry about spelling :)")
 
-	req_professional_points = forms.IntegerField(initial=0)
-	req_athletic_points = forms.IntegerField(initial=0)
-	req_academic_points = forms.IntegerField(initial=0)
+	req_professional_points = forms.IntegerField(initial=0, label="Required Professional Points")
+	req_athletic_points = forms.IntegerField(initial=0, label="Required Athletic Points")
+	req_academic_points = forms.IntegerField(initial=0, label="Required Academic Points")
 
 	slug = forms.SlugField(widget=forms.HiddenInput(), required=False)
 
@@ -45,9 +45,9 @@ class MyQuestForm(forms.ModelForm):
 
 class StatChangeForm(forms.ModelForm):
 	"""docstring for StatChangeForm"""
-	num_professional_points = forms.IntegerField(initial=0, help_text="How many hours did you work professionally today")
-	num_athletic_points = forms.IntegerField(initial=0, help_text="How many hours did you spend exercising today?")
-	num_academic_points = forms.IntegerField(initial=0, help_text="How many hours did you spend studying today?")
+	num_professional_points = forms.IntegerField(initial=0, help_text="How many hours did you work professionally today", label="Professional")
+	num_athletic_points = forms.IntegerField(initial=0, help_text="How many hours did you spend exercising today?", label="Athletic")
+	num_academic_points = forms.IntegerField(initial=0, help_text="How many hours did you spend studying today?", label="Academic")
 
 	class Meta:
 		model = Avatar
