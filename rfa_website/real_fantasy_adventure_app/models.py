@@ -12,16 +12,16 @@ class AvatarQuerySet(models.QuerySet):
 
 # Avatar Model
 class Avatar(models.Model):
-	"""docstring for Avatar"""
+	"""
+	The Avatar is the basic model of the rfa-application. It is the user's
+	connection to the application and User instances share a one to one 
+	relationship with avatar instances.
+
+	It is important to note that a different save than django standard save
+	function has been implemented in order to save the slug field correctly.
+	"""
 	# Links Avatar to User Model instnace
 	user = models.OneToOneField(User)
-
-	# Additional fields should users feel like it.
-	# website = models.URLField(blank=True, null=True)
-	# TODO allow users to upload images to their profiles, in order to do that we need
-	# a static media server to reroute all files uploaded to the media directory 
-	# found on the project level.
-	#userpicture = models.ImageField(upload_to='avatar-images', blank=True)
 	
 	# Avatar fields from here
 	nickname = models.CharField(max_length=80)
@@ -74,7 +74,17 @@ class QuestQuerySet(models.QuerySet):
 
 # Quest model
 class Quest(models.Model):
-	"""docstring for Quest"""
+	"""
+	Quests are a currently planned functional entity in the rfa-application they are different
+	from MyQuests in that they have additional fields and should only be created by staff level
+	people of the application.
+
+	The fundamental difference is that they can actually reward players by increasing the
+	number of points of avatars if they are cleared.
+
+	However difficulty in understanding how to handle the clearing (and not being able to 
+	clear it again) has made this an unimplemented feature.
+	"""
 	title = models.CharField(max_length=256)
 	description = models.TextField()
 	publish = models.BooleanField(default=False)
@@ -121,8 +131,14 @@ class MyQuestQuerySet(models.QuerySet):
 
 # MyQuest Model
 class MyQuest(models.Model):
-	"""MyQuest are Quests written by avatars for themselves to achieve, however
-	 they are not subclasses as they should not include some fields Quests has"""
+	"""
+	MyQuest are Quests written by avatars for themselves to achieve, however
+	they are not subclasses as they should not include some fields Quests has
+	and have a fundamentally different role from them.
+
+	MyQuests share a many to one relationship to avatars. ie. one avatar has
+	many MyQuests.
+	"""
 	avatar = models.ForeignKey(Avatar)
 	title = models.CharField(max_length=256)
 	description = models.TextField()
@@ -132,8 +148,6 @@ class MyQuest(models.Model):
 	req_professional_points = models.IntegerField(default=1)
 	req_athletic_points = models.IntegerField(default=1)
 	req_academic_points = models.IntegerField(default=1)
-
-	# Reward Points (how to model this?)
 
 	# URL Friendly Reference
 	slug = models.SlugField(max_length=200, unique=True)
