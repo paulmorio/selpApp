@@ -4,13 +4,15 @@
 
 **Project Name:**: Real Fantasy Adventure
 
-**Proposal Part 1**: Found under proposal.pdf or its source can be found under proposal.tex
+**Proposal Part 1**: Found under proposal.pdf or its source can be found under proposal.tex in the info folder
+**Report Part 2**: Found under report.pdf or its source as report.tex in the info folder
 
-## USERAUTH ##
-currently using own implemented (django standard contrib auth) authentication, may use allauth if need arises, if ever, for facebook and open profile stuff
+**Note:** Its highly recommended to read the report first.
 
-### Setup ###
-setup of the entire project can be found under the
+### Quick-Start ###
+This section outlines how to quickly get correct environment, get the website started, populate the database, 
+create an admin and run the unit tests written for this project.
+
 
 ### Testing ###
 All the tests can be run against the project after build procedure is completed via the <TO DO> file.
