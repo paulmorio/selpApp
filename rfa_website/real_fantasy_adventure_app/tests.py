@@ -600,23 +600,132 @@ class LogoutViewTests(TestCase):
 		
 		self.assertEqual(response.status_code, 302)
 
-# class AvatarProfileViewTests(TestCase):
-# 	"""
-# 	Class contains tests for the AvatarProfile view, the docstrings of each test function 
-# 	explain what is tested
-# 	"""
+class AvatarProfileViewTests(TestCase):
+	"""
+	Class contains tests for the AvatarProfile view, the docstrings of each test function 
+	explain what is tested
+	"""
 
-# 	def test_avatarProfile_content_check(self):
-# 		"""
-# 		This test checks the contents of the avatar page of a testuser + avatar
-# 		created in this method.
-# 		"""
-# 		# create a user
-# 		testUser = User.objects.create_user(username = "testUser", email="test@test.com", password="test1234")
-# 		testAvatar = Avatar(user=testUser, nickname="TestName", bio="Test Biography", confirm=True)
-# 		testAvatar.save()
+	def test_avatarProfile_status_check(self):
+		"""
+		This test checks the status code of the avatar page of a testuser + avatar
+		created in this method.
+		"""
+		# create a user
+		testUser = User.objects.create_user(username = "testUser", email="test@test.com", password="test1234")
+		testAvatar = Avatar(user=testUser, nickname="TestName", bio="Test Biography", confirm=True)
+		testAvatar.save()
 
-# 		self.client.login(username="testUser", password="test1234")
-# 		response = self.client.get(reverse('avatar/testname'))
-# 		self.assertEqual(response.status_code, 200)
+		self.client.login(username="testUser", password="test1234")
+		response = self.client.get(reverse('avatar', args=('testname',)))
+		self.assertEqual(response.status_code, 200)
+
+	def test_avatarProfile_content_check(self):
+		"""
+		This test checks the contents of the avatar page of a testuser + avatar
+		created in this method. In particular it checks for the name, and the 
+		two important links of adding myquests and logging in hours
+		"""
+		# create a user
+		testUser = User.objects.create_user(username = "testUser", email="test@test.com", password="test1234")
+		testAvatar = Avatar(user=testUser, nickname="TestName", bio="Test Biography", confirm=True)
+		testAvatar.save()
+
+		self.client.login(username="testUser", password="test1234")
+		response = self.client.get(reverse('avatar', args=('testname',)))
+		self.assertEqual(response.status_code, 200)
+		self.assertContains(response, "TestName")
+		self.assertContains(response, "Add MyQuest")
+		self.assertContains(response, "Log in Hours")
+
+	def test_avatarProfile_if_no_myquests(self):
+		"""
+		This test checks if there is an appropiate message if no myquests have been added to the
+		avatar yet.
+		"""
+		# create a user
+		testUser = User.objects.create_user(username = "testUser", email="test@test.com", password="test1234")
+		testAvatar = Avatar(user=testUser, nickname="TestName", bio="Test Biography", confirm=True)
+		testAvatar.save()
+
+		self.client.login(username="testUser", password="test1234")
+		response = self.client.get(reverse('avatar', args=('testname',)))
+		self.assertEqual(response.status_code, 200)
+		self.assertContains(response, "TestName")
+		self.assertContains(response, "Add MyQuest")
+		self.assertContains(response, "Log in Hours")
+		self.assertContains(response, "No myQuests currently in avatar. Create one for yourself! Self Challenge and Discipline is important!")
+
+	def test_avatarProfile_authenticated_user(self):
+		"""Test checks absence of message meant for unauthenticated users (users of type AnonymousUser)"""
+		# create a user
+		testUser = User.objects.create_user(username = "testUser", email="test@test.com", password="test1234")
+		testAvatar = Avatar(user=testUser, nickname="TestName", bio="Test Biography", confirm=True)
+		testAvatar.save()
+
+		self.client.login(username="testUser", password="test1234")
+		response = self.client.get(reverse('avatar', args=('testname',)))
+		self.assertEqual(response.status_code, 200)
+		self.assertContains(response, "TestName")
+		self.assertContains(response, "Add MyQuest")
+		self.assertContains(response, "Log in Hours")
+		self.assertNotContains(response, "Hello adventurer you are not logged in!")
+
+	def test_avatarProfile_not_authenticated_user(self):
+		"""Checks for redirect if user is not authenticated"""
+		testUser = User.objects.create_user(username = "testUser", email="test@test.com", password="test1234")
+		testAvatar = Avatar(user=testUser, nickname="TestName", bio="Test Biography", confirm=True)
+		testAvatar.save()
+
+		# dont log in
+		response = self.client.get(reverse('avatar', args=('testname',)))
+		# check for the redirect
+		self.assertEqual(response.status_code, 302)
+
+	def test_avatarProfile_authenticated_user_but_not_users_avatar(self):
+		"""
+		This tests the case when the logged in user views an avatar profile that is not his/hers
+		in particular it makes sure that myquest addition and logging hours is not possible
+		"""
+		# create a user
+		testUser = User.objects.create_user(username = "testUser", email="test@test.com", password="test1234")
+		testAvatar = Avatar(user=testUser, nickname="TestName", bio="Test Biography", confirm=True)
+		testAvatar.save()
+
+		testUser2 = User.objects.create_user(username = "testUser2", email="test@test.com", password="test1234")
+		testAvatar2 = Avatar(user=testUser2, nickname="TestName2", bio="Test Biography", confirm=True)
+		testAvatar2.save()
+
+		self.client.login(username="testUser2", password="test1234")
+		response = self.client.get(reverse('avatar', args=('testname',)))
+		self.assertEqual(response.status_code, 200)
+		self.assertContains(response, "TestName")
+		self.assertNotContains(response, "Add MyQuest")
+		self.assertNotContains(response, "Log in Hours")
+
+
+	def test_avatarProfile_if_myquest(self):
+		"""
+		This tests the avatar view if the logged in user owns the profile and there are myquests present
+		In particular myquests should be displayed and the no myquests message should not be displayed
+		"""
+		# create a user + avatar
+		testUser = User.objects.create_user(username = "testUser", email="test@test.com", password="test1234")
+		testAvatar = Avatar(user=testUser, nickname="TestName", bio="Test Biography", confirm=True)
+		testAvatar.save()
+
+		# create a myQuest
+		myQuest = MyQuest(avatar=testAvatar, title="TestTitle", description="Test Description", publish=False)
+		myQuest.save()
+
+		self.client.login(username="testUser", password="test1234")
+		response = self.client.get(reverse('avatar', args=('testname',)))
+		self.assertEqual(response.status_code, 200)
+		self.assertContains(response, "TestName")
+		self.assertContains(response, "Add MyQuest")
+		self.assertContains(response, "Log in Hours")
+		self.assertNotContains(response, "No myQuests currently in avatar. Create one for yourself! Self Challenge and Discipline is important!")
+
+		num_myQuests = len(response.context['myQuests'])
+		self.assertEqual(num_myQuests, 1)
 
