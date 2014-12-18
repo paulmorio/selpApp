@@ -140,11 +140,24 @@ the coverage report can be read with
 
 	coverage report
 
-This concludes the quickstart guide.
+This concludes the quickstart guide. Once again the server can be run from
 
-#### Manual Testing ####
-As there are some tests that can only be performed with the human eye and even create cases, a manual
-test procedure document has been placed in the tests directory.
+	selp/selpApp/rfa_website
+
+with the commands 
+
+	python manage.py runserver
+
+and point a browser to 
+
+	http://localhost:8000/real_fantasy_adventure_app/
+
+for the web app or
+
+	http://localhost:8000/admin
+
+for the admin page.
+
 
 ### Questions to Self for Project Report ###
 Hopefully yes to most questions.
