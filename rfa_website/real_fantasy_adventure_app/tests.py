@@ -729,3 +729,105 @@ class AvatarProfileViewTests(TestCase):
 		num_myQuests = len(response.context['myQuests'])
 		self.assertEqual(num_myQuests, 1)
 
+class MyQuestViewTests(TestCase):
+	"""
+	Class contains tests for the MyQuest view, the docstrings of each test function 
+	explain what is tested more descriptively
+	"""
+
+	def test_myQuest_view_authenticated(self):
+		"""
+		This tests the myQuest view if the logged in user owns the profile and the myquest, ie whether we 
+		can get there
+		"""
+		# create a user + avatar
+		testUser = User.objects.create_user(username = "testUser", email="test@test.com", password="test1234")
+		testAvatar = Avatar(user=testUser, nickname="TestName", bio="Test Biography", confirm=True)
+		testAvatar.save()
+
+		# create a myQuest
+		myQuest = MyQuest(avatar=testAvatar, title="TestTitle", description="Test Description", publish=False)
+		myQuest.save()
+
+		self.client.login(username="testUser", password="test1234")
+		response = self.client.get(reverse('myQuest', args=('testname','testtitle',)))
+		self.assertEqual(response.status_code, 200)
+
+	def test_myQuest_view_not_authenticated(self):
+		"""
+		If an unauthenticated user tries to access the myquest page he/she is redirected
+		to the relevant notLoggedIn page.
+		"""
+		# create a user + avatar
+		testUser = User.objects.create_user(username = "testUser", email="test@test.com", password="test1234")
+		testAvatar = Avatar(user=testUser, nickname="TestName", bio="Test Biography", confirm=True)
+		testAvatar.save()
+
+		# create a myQuest
+		myQuest = MyQuest(avatar=testAvatar, title="TestTitle", description="Test Description", publish=False)
+		myQuest.save()
+
+		response = self.client.get(reverse('myQuest', args=('testname','testtitle',)))
+		self.assertEqual(response.status_code, 302)
+
+	def test_myQuest_view_authenticated_not_users_myQuest(self):
+		"""
+		checks that logged in user cannot access a myquest that is not his/her own and gets redirected
+		"""
+		# create a user + avatar
+		testUser = User.objects.create_user(username = "testUser", email="test@test.com", password="test1234")
+		testAvatar = Avatar(user=testUser, nickname="TestName", bio="Test Biography", confirm=True)
+		testAvatar.save()
+
+		# create a myQuest
+		myQuest = MyQuest(avatar=testAvatar, title="TestTitle", description="Test Description", publish=False)
+		myQuest.save()
+
+		testUser2 = User.objects.create_user(username = "testUser2", email="test@test.com", password="test1234")
+		testAvatar2 = Avatar(user=testUser2, nickname="TestName2", bio="Test Biography", confirm=True)
+		testAvatar2.save()
+
+		self.client.login(username="testUser2", password="test1234")
+		response = self.client.get(reverse('myQuest', args=('testname','testtitle',)))
+		self.assertEqual(response.status_code, 302)
+
+	def test_myQuest_view_no_victory_message(self):
+		"""
+		If avatar meets the minimum required number of points to clear the entire myquest a victory message is
+		written, a standard avatar and standard myquest dont satisfy this at creation, thus a search for the 
+		victory message absence is performed in this test
+		"""
+		# create a user + avatar
+		testUser = User.objects.create_user(username = "testUser", email="test@test.com", password="test1234")
+		testAvatar = Avatar(user=testUser, nickname="TestName", bio="Test Biography", confirm=True)
+		testAvatar.save()
+
+		# create a myQuest
+		myQuest = MyQuest(avatar=testAvatar, title="TestTitle", description="Test Description", publish=False)
+		myQuest.save()
+
+		self.client.login(username="testUser", password="test1234")
+		response = self.client.get(reverse('myQuest', args=('testname','testtitle',)))
+		self.assertEqual(response.status_code, 200)
+		self.assertNotContains(response, "Well Done! You have cleared this quest!")
+
+	def test_myQuest_view_yes_victory_message(self):
+		"""
+		If avatar meets the minimum required number of points to clear the entire myquest a victory message is
+		written, a standard avatar and standard myquest dont satisfy this at creation, however if avatar is given
+		points to satisfy victory condition, the message is presented.
+		"""
+		# create a user + avatar
+		testUser = User.objects.create_user(username = "testUser", email="test@test.com", password="test1234")
+		testAvatar = Avatar(user=testUser, nickname="TestName", bio="Test Biography", confirm=True, num_professional_points=10, num_academic_points=10, num_athletic_points=10)
+		testAvatar.save()
+
+		# create a myQuest
+		myQuest = MyQuest(avatar=testAvatar, title="TestTitle", description="Test Description", publish=False)
+		myQuest.save()
+
+		self.client.login(username="testUser", password="test1234")
+		response = self.client.get(reverse('myQuest', args=('testname','testtitle',)))
+		self.assertEqual(response.status_code, 200)
+		self.assertContains(response, "Well Done! You have cleared this quest!")
+
