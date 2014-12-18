@@ -1,10 +1,11 @@
 # README #
 ## Software Large Engineering Practical Project for Paul Scherer (s1206798) ##
-### UG3 2014-2015 ###
+## UG3 2014-2015 ##
 
 **Project Name:**: Real Fantasy Adventure
 
 **Proposal Part 1**: Found under proposal.pdf or its source can be found under proposal.tex in the info folder
+
 **Report Part 2**: Found under report.pdf or its source as report.tex in the info folder
 
 **Note:** Its highly recommended to read the report first.
@@ -12,6 +13,64 @@
 ### Quick-Start ###
 This section outlines how to quickly get correct environment, get the website started, populate the database, 
 create an admin and run the unit tests written for this project.
+
+#### Environment ####
+It is highly recommended that the folder containing this readme be placed in another folder
+which can be called anything (but for this example called 'selp') and then create an virtual
+environment at this level with python 2.7.8 as the base called 'env'. On DICE this is
+
+	virtualenv --python=/usr/bin/python2.7 env
+
+After this is complete the following directory tree should result
+
+	selp
+	  |
+	  |_selpApp
+	  |
+	  |_env
+
+Inside of the 'selp' directory please run the following command to activate the environment
+
+	source env/bin/activate
+
+Checking that python from the virtualenv is used can be checked by running 'which python'.
+Deactivating the virtualenv can be done by simply calling 'deactivate' but please do not do this
+for not. 
+
+Please install the required packages that are needed for this by running this command
+
+	pip install -r requirements.txt
+
+This command will install all of the packages list in the file requirements.txt from top to bottom.
+If anything fails to install, please attempt installing again by running
+
+	pip install <missing_package>
+
+With this the environment should be ready.
+
+#### Get the Web Application Running ####
+##### Use submitted set #####
+With the environment setup and activated, it is likely that I have submitted the project with
+everything set-up, database populated, superuser admin created. In this case please cd into 
+selpApp/rfa_website, ie.
+
+	cd selpApp/rfa_website
+
+And then start the django built in server
+
+	python manage.py runserver
+
+and point a browser to 
+
+	http://localhost:8000/real_fantasy_adventure_app/
+
+for the web app or
+
+	http://localhost:8000/admin
+
+for the admin page. In this case the username is 'admin' and password is 'test1234'
+
+##### Start a new instance of project #####
 
 
 ### Testing ###
