@@ -251,14 +251,15 @@ def add_myQuest(request, avatar_name_slug):
                 myQuest.save()
                 # probably better to use a redirect here.
                 return avatarProfile(request, avatar_name_slug)
-            else:
-                print form.errors
+        else:
+            print form.errors
     else:
         form = MyQuestForm()
         context_dict = {'form': form, 'avatar': avatar, 'avatar_name_slug': avatar_name_slug}
 
     return render(request, 'real_fantasy_adventure_app/add_myQuest.html', context_dict)
 
+@login_required(login_url='/real_fantasy_adventure_app/notLoggedIn/')
 def statChange(request, avatar_name_slug):
     """
     This view handles the logging in of hours made by users to their avatar, using functions
@@ -280,8 +281,8 @@ def statChange(request, avatar_name_slug):
                 inc_athletic_points(avatar, formValues['num_athletic_points'])
                 inc_academic_points(avatar, formValues['num_academic_points'])
                 return avatarProfile(request, avatar_name_slug)
-            else:
-                print form.errors
+        else:
+            print form.errors
     else:
         form = StatChangeForm()
         context_dict = {'form': form, 'avatar': avatar, 'avatar_name_slug': avatar_name_slug}
