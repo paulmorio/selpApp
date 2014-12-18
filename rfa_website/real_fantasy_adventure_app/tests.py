@@ -831,3 +831,84 @@ class MyQuestViewTests(TestCase):
 		self.assertEqual(response.status_code, 200)
 		self.assertContains(response, "Well Done! You have cleared this quest!")
 
+class AddMyQuestViewTests(TestCase):
+	"""
+	Class contains tests for the add_myQuest view, the docstrings of each test function 
+	explain what is tested more descriptively
+	"""
+
+	def test_addMyQuest_view_authenticated_owns_avatar(self):
+		"""
+		Tests if add_myQuest view is accessible by authenitcated who owns the avatar and is 
+		trying to add the MyQuest
+		"""
+		# create a user + avatar
+		testUser = User.objects.create_user(username = "testUser", email="test@test.com", password="test1234")
+		testAvatar = Avatar(user=testUser, nickname="TestName", bio="Test Biography", confirm=True, num_professional_points=10, num_academic_points=10, num_athletic_points=10)
+		testAvatar.save()
+
+		# create a myQuest
+		myQuest = MyQuest(avatar=testAvatar, title="TestTitle", description="Test Description", publish=False)
+		myQuest.save()
+
+		self.client.login(username="testUser", password="test1234")
+		response = self.client.get(reverse('add_myQuest', args=('testname',)))
+		self.assertEqual(response.status_code,200)
+
+	def test_addMyQuest_view_not_authenticated(self):
+		"""
+		Tests if add_myQuest view creates a redirect if an unauthenticated user attempts to call 
+		this view
+		"""
+		# create a user + avatar
+		testUser = User.objects.create_user(username = "testUser", email="test@test.com", password="test1234")
+		testAvatar = Avatar(user=testUser, nickname="TestName", bio="Test Biography", confirm=True, num_professional_points=10, num_academic_points=10, num_athletic_points=10)
+		testAvatar.save()
+
+		# create a myQuest
+		myQuest = MyQuest(avatar=testAvatar, title="TestTitle", description="Test Description", publish=False)
+		myQuest.save()
+
+		response = self.client.get(reverse('add_myQuest', args=('testname',)))
+		self.assertEqual(response.status_code,302)
+
+class StatChangeViewTests(TestCase):
+	"""
+	Class contains tests for the add_myQuest view, the docstrings of each test function 
+	explain what is tested more descriptively
+	"""
+
+	def test_statChange_view_authenticated_owns_avatar(self):
+		"""
+		Tests if statChange view is accessible by authenitcated who owns the avatar and is 
+		trying to Log in hours
+		"""
+		# create a user + avatar
+		testUser = User.objects.create_user(username = "testUser", email="test@test.com", password="test1234")
+		testAvatar = Avatar(user=testUser, nickname="TestName", bio="Test Biography", confirm=True, num_professional_points=10, num_academic_points=10, num_athletic_points=10)
+		testAvatar.save()
+
+		# create a myQuest
+		myQuest = MyQuest(avatar=testAvatar, title="TestTitle", description="Test Description", publish=False)
+		myQuest.save()
+
+		self.client.login(username="testUser", password="test1234")
+		response = self.client.get(reverse('statChange', args=('testname',)))
+		self.assertEqual(response.status_code,200)
+
+	def test_statChange_view_not_authenticated(self):
+		"""
+		Tests if statChange view creates a redirect if an unauthenticated user attempts to call 
+		this view
+		"""
+		# create a user + avatar
+		testUser = User.objects.create_user(username = "testUser", email="test@test.com", password="test1234")
+		testAvatar = Avatar(user=testUser, nickname="TestName", bio="Test Biography", confirm=True, num_professional_points=10, num_academic_points=10, num_athletic_points=10)
+		testAvatar.save()
+
+		# create a myQuest
+		myQuest = MyQuest(avatar=testAvatar, title="TestTitle", description="Test Description", publish=False)
+		myQuest.save()
+
+		response = self.client.get(reverse('statChange', args=('testname',)))
+		self.assertEqual(response.status_code,302)
