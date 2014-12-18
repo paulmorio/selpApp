@@ -70,7 +70,7 @@ I have stuck to the design choices made in Part 1, with the exception of some of
 
 \subsection{Technologies}
 \subsubsection{Python2.7.8}
-I had decided on using Python2.7.8 because I felt most comfortable using this language in this version from past experience in it. Additionally this version worked well together with \textit{virtualenv} on DiCE machines, whereas there was a bug in the version of virtualenv installed on DiCE in the creation of the virtual environment if initialized with the installed Python3.4 version (at least by the time of this writing, I realize there is a pyenv workaround that has been described in the informatics website, but didnt find this until later) this I have stuck to my decision to use Python2.7.8 despite the suggestion to use the newer version in the proposal feedback. However my code has been kept general enough so that even a web server running the project in Python3.x should theoretically work without problem save for a few lines that may need to be updated. However I think it still is important to be critical of using an older language version when a newer one is present.
+I had decided on using Python2.7.8 because I felt most comfortable using this language in this version from past experience in it. Additionally I had liked its built in docstrings feature for easy documentation creation and ability to call this docstring simply by calling 'help' along with the class, function, method, or module. Additionally this version worked well together with \textit{virtualenv} on DiCE machines, whereas there was a bug in the version of virtualenv installed on DiCE in the creation of the virtual environment if initialized with the installed Python3.4 version (at least by the time of this writing, I realize there is a PyEnv workaround that has been described in the informatics website, but didnt find this until later) this I have stuck to my decision to use Python2.7.8 despite the suggestion to use the newer version in the proposal feedback. However my code has been kept general enough so that even a web server running the project in Python3.x should theoretically work without problem save for a few lines that may need to be updated. However I think it still is important to be critical of using an older version when a newer one is present due to some libraries slowly dropping support for the 2.x series.
 
 \subsubsection{Django 1.7}
 I chose a heavier web development framework, Django1.7, because I saw it as an all-in-one package that contained a built-in web server, descriptive config that were easy to edit, a test suite that was easy to run, a large community of users, ORM functionality, and implementation language being python appealed to me greatly as a newcomer to web development. The availability and ease of installing plug ins to the framework was of great help to me in this practical. I spent a great amount of time making smaller applications (not this practical) in order to get used to the framework and initially found its strict Model-View-Template structure for data-driven applications a bit restrictive but over time have found its directed way of starting up applications helpful in getting applications on its feet quickly.
@@ -78,31 +78,87 @@ I chose a heavier web development framework, Django1.7, because I saw it as an a
 The ORM, and database migration management functionalities have made things much easier as curating a database manually would have taken me a lot of time to understand and perform. It is arguable that I may have learned even more about web technologies/development at a fundamental level had a taken a lighter framework such as \textit{flask} but I do not think I would have been able to create much of a project in the time I was given had I done so.
 
 \subsubsection{HTML \& CSS with Django}
-Having focused mainly on understanding the back-end handling of the web application with Django I ended up doing little in regards of making the web application pretty (though it would not be difficult to perform, for anyone who has a better design sense and html/css experience than I do). I have used html along with Django's templating system to create html pages with variable content pulled from the database to serve to the user instead of hard coded html. Additionally, using django's templating system I had all of the templates extend a base html file so that the general look of the website can be changed wholly simply by changing this base HTML file and the CSS files referenced by it. I have used a CSS bundle provided by the Skeleton CSS Boiler Plate (by Mr. Dave Gamache, under MIT License) project to style some aspects of the web application such as the buttons and forms, as I could not make it look good myself but was unwilling to use a larger package such as BootStrap without fully appreciating its strengths.
+Having focused mainly on understanding the back-end handling of the web application with Django I ended up doing little in regards of making the web application pretty (though it would not be difficult to perform, for anyone who has a better design sense and HTML/CSS experience than I do). I have used html along with Django's templating system to create html pages with variable content pulled from the database to serve to the user instead of hard coded html. Additionally, using django's templating system I had all of the templates extend a base html file so that the general look of the website can be changed wholly simply by changing this base HTML file and the CSS files referenced by it. I have used a CSS bundle provided by the Skeleton CSS Boiler Plate (by Mr. Dave Gamache, under MIT License) project to style some aspects of the web application such as the buttons and forms, as I could not make it look good myself but was unwilling to use a larger package such as BootStrap without fully appreciating its strengths.
  
 \subsubsection{SQLite3}
 I have kept to using the standard database SQLite3 that is used by default for development in Django because I found it sufficient for my task and needs. Even in production I believe its use would be fine, as I don't expect many users of my application, and features involving concurrent updates and large scale calculations involving millions of rows is unlikely. Even so it would not be difficult to use another DBMS such as MySQL or PostGresQL as these are supported by Django and can be used after changing the rfa\_website/settings.py DATABASES variable, as well as changing some model fields as necessary.
 
-\section{Development}
+\subsection{Database Models}
+As the models used in this application will be referenced it may help to describe and display the relationships between the models. There are currently 3 implemented models in the \verb|models.py| with an additional User model used from \verb|django.contrib.auth.models| with the relationships described below.
+
+\begin{center}
+\includegraphics[scale=0.5]{selpModels.png} \\
+\end{center}
+
+Users and Avatars are tightly connected via a one to one relationship that is part of the game setting, as well as functional as they constitute a entity that I may refer to as user/avatar in the report and definitely in the source code. As one can see the Avatar is the central model in the application as through the avatar the user can create MyQuests and take on Quests ,though the Quests feature is not part of the submitted project because of a deficiency described further below; as such the main models for the current web application are Users, Avatars, and MyQuests. MyQuests are said to 'belong' to an user/avatar and as such there is a optional one to many relationship between an Avatar and MyQuest instance.
+
+\section{Development Process}
 \subsection{Difficulties and Deficiencies}
+As mentioned there were many difficulties understanding web development practices and web stacks due to inexperience and general ignorance, the lecture on webstacks definitely helped yet I had much to learn. A lot of time was spent trying to understand how web applications talked and URLs were handled even though much of what I had learned was not of much use in the end because I was researching and learning about the wrong things. In short the greatest difficulty was finding a foothold to start off of. However after this issue was resolved slowly simply by learning to look for the right information with more knowledge. The next problem was actually implementing everything. However due to my wariness I tried to follow good software engineering practices as early as possible.
+
+Approaching the problem in wrong way in the beginning I had created the Quest model first instead of following my development schedule I was very confused and focused on implementing a feature that was not even part of the requirements but rather an extra feature that was meant to be implemented once the minimum features and requirements were created and met respectively just to satisfy a curiosity. I would next time look at the proposal, created initially as some thought actually went into it in the first place, and compare it to the knowledge of the application/tools I had at the time of implementation begin.
+
+\subsubsection{PEP Code Style}
+I tried adopting (with varying success) PEP (Python Enchancement Protocols) practices in order to write idiomatic python code. In particular I tried to adhering to PEP8, with little success in PEP8 breaking the 80 character guideline quite often. Despite breaking these guidelines I tried my best to make my code as clear as possible, I believe this is especially evident in my tests, where the names of the tests are clear or my population script.
 
 \subsection{Things I am proud of}
 \subsubsection{Usage of Git}
+Knowing that I had potential to break a lot of things I resolved to use the Git VCS rigorously and correctly, and resolved to use branches wherever possible. In particular, this was useful when trying different authentication systems for the web application after having implemented user authentication. I had tried different 3rd party authentication packages such as django-allauth, and django-registration-redux both on different branches but was able to put these features aside safely after realising they did not create a particular improvement over what I had implemented/wanted and merged into the master branch before hand.
+
+Moreover correctly using the reset commands allowed to me to make reasonable and rational commits with longer commit messages (though not always) so that I could pick up where I had left off if I were to stop working and pick up work several days later just by going through the commit log.
+
+To improve usage I could have looked a bit more into the usage of git hooks or creating watchdog scripts that run the unit tests I had written as soon as a commit, push, or pull had been made.
+
+\subsubsection{Issue Tracker}
+Taking on the advice that "an issue tracker is \textit{never} overkill" from the feedback received I used a simple issue tracking system, in which I had kept a list of issue on sticky notes on a white board with priority levels on each of the issues. This allowed me to focus on important tasks/bugs that needed attention the most. Whenever an issue was fixed the [ISSUEFIX] or [BUGFIX] was used as a prefix to the commit message content, and the commit id placed on the issue to show that it has been dealt with. This system however is off-line and I should have an online solution such as the issue tracker provided by project management or SCM packages such as Trac. Unfortunately I was unable to resolve all issues that arose during development, some of which I have described as part of the functional deficiencies. 
+
 \subsubsection{Documentation}
-DocStrings, lol sphinx improvement
-\subsubsection{Tests}
-Lots of unit tests, early start on model tests, say how late you were in view tests
+Having python as my main implementation language allowed me take advantage of Python's built in docstring abilities. As such I have included docstrings to each of the classes, functions, and methods I have written, but not at the module level, as I did not see this as necessary given how well defined and documented the standard modules utilised in django web applications are. However I must note I have no external documentation for developers nor a user manual (the web application is too simple at this point). However I would suggest the usage of the Sphinx Documentation Generator to create external documentation (by external I mean outside of the source code) of the docstrings I had written, and use the supported RestructuredText to create HTML friendly documentation that could be made available on the website for both developer documentation or user documentation. 
 
-\section{Implementation Choices}
-\section{Current Functional Deficiencies}
+\subsubsection{Testing Strategy}
+The tests are located in the \verb|../real_fantasy_adventure_app/tests.py|. There are 75 unit tests that can be run via the django test suite. Arguably there are cases I had not covered due to time constraints and I had overseen bugs in my views because I didn't write the view tests early and thought of all the possible cases for the views at the time of writing (described as functional deficiencies in the Implementation section), but I am proud of having understood the test structure and being able to find bugs in my code as I had written tests. As a result I have begun to appreciate the importance of tests much more in keeping code sane as it is refactored or changed. Using the \textit{coverage} package and running the commands: (this requires that the project already be set up or be in a state able to run these tests as described in the readme file)
 
-\subsection{Suggested Improvements}
+\begin{verbatim}
+	coverage run --source='.' manage.py test real_fantasy_adventure_app
+	coverage report
+\end{verbatim}
 
-\subsubsection{Tests}
+in the \verb|selpApp/rfa_website/| directory gave me 91\% statement coverage as shown below.
 
+\begin{center}
+\includegraphics[scale=0.5]{selpTestCoverage.png} \\
+\end{center}
+
+In addition to the automated tests, I believe a manual testing procedure would be helpful to ensure correct/expected display of items in the screen web application. While these would not be carried out with the regularity of the automated tests being run each time development starts, ends, commits are made, or another test is added; the manual tests could be run each time a release would be scheduled iteratively (if we were following agile practices). To this end a database population script had been created known as \verb|selpApp/rfa_website/populate.py| had been provided to quickly create a set amount of users, avatars, and myquests (default 100 test users/avatars, and 3 MyQuests for each avatar). If a manual test is difficult, visual tests could be carried out by specified testing frameworks for this particular purpose like \textit{Selenium}.
+
+\subsubsection{Idiomatic Style}
+As described in the 'PEP Code Style' section above I had some trouble writing code in the PEP style, I tried to follow good coding practices by making my signatures as explicit and self explanatory as possible. As mentioned this is particularly evident in my \verb|../real_fantasy_adventure_app/tests.py| tests file, or in models file.
+
+While this is a smaller note, I had originally hard-coded each of the HTML files that the view had returned when a request had been made. However I had learned of using django's templating engine and HTML file extension to create a unified look, and felt this was another example of following idiomatic practices in django (and other web frameworks at large).
+
+\section{Implementation}
+\subsection{Requirements}
+In this section the implementation of the latter two of the four basic requirements outlined above are discussed. In the omitted first two of the four basic requirements, the first is something I aspired to satsify (though my word wouldn't be convincing enough) and the second one has been satisfied, by having developed and tested (both through automated and manual means) most of my application on DiCE.
+
+\subsubsection{User Accounts \& Authentication}
+Using Django's included User model and authentication system I had created a rudimentary user authentication using django's auth package. Coupled with users one to one relationship to avatars, the avatar profiles satisfy the notion of the user accounts, that can be ranked.
+
+\subsubsection{Ranking System}
+In its current state the users are ranked by the amount of points their avatars have earned in each of the categories: Professional, Athletic, and Academic. A full rankings page showing all of the avatars ranked by decreasing order of their respective categories is available from the index (or home) page. In fact the index page shows the current top 5 avatars in each of the categories. This is currently lacking the total points ranking because I found it troublesome to rank the models according to a function return rather than a attribute, however, this should be easy to fix, but haven't in order to focus on another program and to write tests. Nonetheless I believe even in its most rudimentary state it is in now, I believe it satisfies the user ranking requirement, and has potential to be expanded greatly with more categories and filtering features.
+
+\subsection{Current Functional Deficiencies}
+As a result of underestimating the project and making mistakes in the learning phase, there are many features I would have liked to implement as well as a few functional deficiencies (as well as bugs) in what has been implemented and this section is dedicated to the latter.
+
+\subsubsection{Quest Model}
+The Quest model that has been implemented in the beginning of the development process has been pushed to the back and in its current state has not been included in the main function of the web application (as planned in development stage 5 [extra] of the proposal). The main reason for this is the problematic logical understanding of how avatars can take on Quests. Clearly Avatars share a many to many relationship but beyond this I dont see how users can 'accept' or 'clear' Quests. A boolean variable in Quests could help. This is a frustrating deficiency as considerable work and thought has gone to this feature already, with staff being able to write Quests in the admin view with markdown support and so forth. I mark this as a design and implementation deficiency that has to be rethought, but should be implementable with some more time.
+
+\subsubsection{StatChange lacks Value Check}
+Currently the user can add any number of points to log in to their hours, as it was undecided at a business logic level to allow or disallow more than 24 points being added total to an avatar a day. If it were to disallow the addition of more than 24 points to the avatar, I would have used a cookie that is checked by the server when the user calls the statChange view. Thus at the moment any number of points (even negatives) are allowed because game logic for section hasn't been decided upon (but the implementation for any of the cases is clear).
 
 \section{Conclusion}
 
 \section{\textit{Extra:} Deploying the Project Globally on Heroku}
+This extra section describes the process how the project could potentially be deployed globally in its current state with only a few changes. In this example the deployment of the project on \textit{Heroku} is described, because Heroku allows for free hosting of small websites/applications with low number of visitors.
+
 
 \end{document}
