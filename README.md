@@ -1,5 +1,5 @@
 # README #
-## Software Large Engineering Practical Project for Paul Scherer (s1206798) ##
+## Software Large Engineering Practical Project ##
 ## UG3 2014-2015 ##
 
 **Project Name:**: Real Fantasy Adventure
@@ -17,7 +17,7 @@ create an admin and run the unit tests written for this project.
 #### Environment ####
 It is highly recommended that the folder containing this readme be placed in another folder
 which can be called anything (but for this example called 'selp') and then create an virtual
-environment at this level with python 2.7.8 as the base called 'env'. On DICE this is
+environment at this level with python 2.7.8 as the base called 'env'.
 
 	virtualenv --python=/usr/bin/python2.7 env
 
